@@ -5,8 +5,13 @@
 #Conexoes com o banco de dados
 datasource/hearthstone.json
 datasource/magic.json
+datasource/marioCart.json
 
 
 #Ambiente virtual
 prevServEnv/
 
+
+*.pyc
+
+logs/historicoLogs/

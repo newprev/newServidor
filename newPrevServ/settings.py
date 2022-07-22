@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from datasource.getResources import getDatabase
+from datasource.getResources import getDatabase, getEmailServer, getLoggingPsd
 from utils.enums.conexoes import TipoConexao
 
 # Carregando a SECRET_KEY das variáveis de ambiente
@@ -140,3 +140,42 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'escritorio.Escritorio'
+
+# Email
+emailConfig: dict = getEmailServer()
+
+EMAIL_HOST = emailConfig['emailHost']
+EMAIL_PORT = emailConfig['port']
+EMAIL_HOST_USER = emailConfig['emailHostUser']
+EMAIL_HOST_PASSWORD = emailConfig['emailHostPassword']
+SERVER_EMAIL = emailConfig['serverEmail']
+EMAIL_USE_TLS = emailConfig['emailUseTls']
+EMAIL_USE_SSL = emailConfig['emailUseSsl']
+
+# LOGS
+from logging import INFO
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+
+sentryLogging = LoggingIntegration(
+    level=INFO,
+    event_level=INFO
+)
+
+sentry_sdk.init(
+    dsn=getLoggingPsd(),
+    integrations=[sentryLogging, DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
+
+from logs.newLoggin import NewLogging
+logs = NewLogging()
