@@ -14,4 +14,4 @@ prevServEnv/
 
 *.pyc
 
-logs/historicoLogs/
+logs/historicoLogs/*.txt
