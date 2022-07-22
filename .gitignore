@@ -1,0 +1,12 @@
+#Variaveis de ambiente
+.env
+
+
+#Conexoes com o banco de dados
+datasource/hearthstone.json
+datasource/magic.json
+
+
+#Ambiente virtual
+prevServEnv/
+
