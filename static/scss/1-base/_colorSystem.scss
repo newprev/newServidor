@@ -1,0 +1,142 @@
+// Primárias
+$Medium-blue: #292D40;
+$Cerulean-Blue: #3A405A;
+$Blue-disabled: #3F4E8C;
+$Blue-solitude: #566BBF;
+$Lavender: #3F64FF;
+
+// Sucesso
+$Pigment-green: #009E38;
+$Shamrock: #23E386;
+$Swan-Down: #CFF2DC;
+
+// Cores de erro
+$Error-red: #E70000;
+$Radical-red: #FF345E;
+
+// Cores de alerta
+$Alert-yellow: #F2ED6F;
+
+// Preto
+$Black-pearl: #040D14;
+$Jaguar: #1F1E29;
+$Black-marlin: #373641;
+$Arsenic: #3D464D;
+$Bright-gray: #52555A;
+$Mid-Gray: #606970;
+$Raven: #6F757B;
+$Dark-gray: #AFAFAF;
+$Pattens-blue: #DDDEDF;
+
+// Branco
+$White-smoke: #F2F2F2;
+$Solitude: #F4F5F8;
+$Snow: #F9F9F9;
+$White: #FFFF;
+
+
+
+@function primaryColor($valor: 0) {
+    $colorReturn: $Blue-disabled;
+
+    @if ($valor == -200) {
+        $colorReturn: $Medium-blue;
+    }
+    @else if ($valor == -100) {
+        $colorReturn: $Cerulean-Blue;
+    }
+    @else if ($valor == 100) {
+        $colorReturn: $Blue-solitude;
+    }
+    @else if ($valor == 200) {
+        $colorReturn: $Lavander;
+    }
+
+    @return $colorReturn;
+}
+
+@function successColor($valor: 0) {
+    $colorReturn: $Pigment-green;
+
+    @if ($valor == 100) {
+        $colorReturn: $Shamrock;
+    }
+    @else if ($valor == 200) {
+        $colorReturn: $Swan-Down;
+    }
+
+    @return $colorReturn;
+}
+
+@function errorColor($valor: 0) {
+    $colorReturn: $Error-red;
+
+    @if ($valor == 100) {
+        $colorReturn: $Radical-red;
+    }
+
+    @return $colorReturn;
+}
+
+@function alertColor($valor: 0) {
+    $colorReturn: $Alert-yellow;
+
+    @return $colorReturn;
+}
+
+@function errorColor($valor: 0) {
+    $colorReturn: $Error-red;
+
+    @if ($valor == 100) {
+        $colorReturn: $Radical-red;
+    }
+
+    @return $colorReturn;
+}
+
+@function blackColor($valor: 0) {
+    $colorReturn: $Black-pearl;
+
+    @if ($valor == 100) {
+        $colorReturn: $Jaguar;
+    }
+    @else if ($valor == 200) {
+        $colorReturn: $Black-marlin;
+    }
+    @else if ($valor == 300) {
+        $colorReturn: $Arsenic;
+    }
+    @else if ($valor == 400) {
+        $colorReturn: $Bright-gray;
+    }
+    @else if ($valor == 500) {
+        $colorReturn: $Mid-Gray;
+    }
+    @else if ($valor == 600) {
+        $colorReturn: $Raven;
+    }
+    @else if ($valor == 700) {
+        $colorReturn: $Dark-gray;
+    }
+    @else if ($valor == 800) {
+        $colorReturn: $Pattens-blue;
+    }
+
+    @return $colorReturn;
+}
+
+@function whiteColor($valor: 0) {
+    $colorReturn: $White;
+
+    @if ($valor == 100) {
+        $colorReturn: $Snow;
+    }
+    @else if ($valor == 200) {
+        $colorReturn: $Solitude;
+    }
+    @else if ($valor == 300) {
+        $colorReturn: $White-smoke;
+    }
+
+    @return $colorReturn;
+}

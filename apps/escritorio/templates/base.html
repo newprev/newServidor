@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <!-- Meus arquivos estáticos -->
+            <link rel="stylesheet" href="{% static 'fonts/avenirFonts.css'%}">
+            <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+
+            <!-- Font awesome -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <!-- Favicon -->
+            <link rel="icon" href="{% static 'images/favicon.png' %}">
+
+            <title>NewPrev</title>
+
+        </head>
+
+    <body>
+
+        {% include 'partials/nav.html' %}
+
+        {% block content %}
+        {% endblock%}
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-desc-container">
+                    <h3 class="footer-title">NewPrev</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis reprehenderit quos cum dicta? In velit illum tenetur dicta laborum necessitatibus voluptates ex rerum distinctio error, quo optio voluptatibus. Aspernatur, beatae?</p>
+                </div>
+                <div class="footer-links-container">
+                    <div class="footer-links-container-list">
+                        <p class="footer-title">Links</p>
+                        <ul>
+                            <li>
+                                <a href="#">Base de conhecimentos</a>
+                            </li>
+                            <li>
+                                <a href="#">Trabalhe conosco</a>
+                            </li>
+                            <li>
+                                <a href="#">Últimos projetos</a>
+                            </li>
+                            <li>
+                                <a href="#">Contato</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-copyright-container">
+                    <p>&copy; 2022 NewPrev</p>
+                    <p>A melhor opção de sistemas previdenciários</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {% if messages %}
+            {% for m in messages %}
+                    <script>
+                        Swal.fire({
+                            "title": "{{ m }}",
+                            "icon": "{{ m.tags }}"
+                        })
+                    </script>}
+
+            {% endfor %}
+        {% endif %}
+
+        {% block js %}
+        {% endblock %}
+    </body>
+
+    </html>

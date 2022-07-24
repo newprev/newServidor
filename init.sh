@@ -6,7 +6,6 @@ echo '    '
 python3 -m venv prevServEnv
 source prevServEnv/bin/activate
 pip install --upgrade pip
-pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 echo '    '
 echo '    '
 echo 'Instalando dependencias do projeto **************'

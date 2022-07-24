@@ -15,3 +15,5 @@ prevServEnv/
 *.pyc
 
 logs/historicoLogs/*.txt
+
+.vscode/

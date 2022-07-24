@@ -1,9 +1,7 @@
-from apps.escritorios.models import Escritorio
 from apps.advogado.models import Advogado, TrocaSenha
-
 from django.core.mail import send_mail
 
-from prevEnums import TipoLog, Prioridade
+from apps.escritorio.models import Escritorio
 
 
 def emailBoasVindas(escritorio: Escritorio) -> True:

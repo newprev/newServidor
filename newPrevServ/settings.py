@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 from os import getenv
@@ -44,12 +44,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django framework
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django REST framework
+    'django_filters',
+    'drf_yasg',
+    'rest_framework',
 
     # Meus apps
     'apps.advogado',
@@ -60,6 +66,11 @@ INSTALLED_APPS = [
     'apps.sincron',
     'apps.gerenciamento',
 ]
+
+REST_FRAMEWORK = {
+    "DATE_INPUT_FORMATS": ["%Y-%m-%d"],
+    "DATETIME_FORMAT": "%Y-%m-%d",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,12 +143,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'newPrevServ/static')]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_USER_MODEL = 'escritorio.Escritorio'
 

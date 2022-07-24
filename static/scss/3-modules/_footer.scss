@@ -1,0 +1,62 @@
+@import '../1-base/colorSystem';
+
+footer {
+    background-color: blackColor(500);
+    color: whiteColor(300);
+    padding: 5rem 2rem;
+
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .footer-title {
+            color: #FFF;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .footer-desc-container, .footer-links-container {
+        width: 50%;
+    }
+
+    .footer-desc-container {
+        p {
+            width: 80%;
+            line-height: 1.3;
+        }
+    }
+
+    .footer-links-container {
+        display: flex;
+
+        &-list {
+            padding: 0 1rem;
+             
+            li {
+                margin-bottom: .5rem;
+             }
+
+             a {
+                color: whiteColor(300);
+                transform: .5s;
+
+                &:hover {
+                    color: #FFF;
+                }
+             }
+        }
+    }
+
+    .footer-copyright-container {
+        width: 100%;
+        margin-top: 3rem;
+
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+}

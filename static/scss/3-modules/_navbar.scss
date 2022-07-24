@@ -1,0 +1,42 @@
+@import '../1-base/colorSystem';
+@import 'navMixins';
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: primaryColor();
+
+    .logo {
+        color: blackColor(800);
+        font-size: 2rem;
+        align-items: center;
+        @include logoHover();
+    }
+
+    .fa-solid.fa-gavel {
+        color: blackColor(800);
+        font-size: 2rem;
+    }
+
+    .menu-lista {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        &-item{
+            margin: 0 1rem;
+        }
+
+        a {
+            color: blackColor(800);
+            @include menuHover();
+        }
+
+    }
+}
