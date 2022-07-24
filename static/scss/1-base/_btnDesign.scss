@@ -1,0 +1,11 @@
+@import 'colorSystem';
+
+%btn-principal-G {
+    background: primaryColor();
+    border-radius: 8px;
+
+    padding: 16px;
+    color: whiteColor();
+
+    font-weight: bold;
+}

@@ -1,18 +1,18 @@
 @import '../1-base/colorSystem';
 @import 'navMixins';
 
+
 .cabecalho {
     display: flex;
     justify-content: space-between;
     padding: 1.5rem 2rem;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 10%;
+    height: 5rem;
     background-color: primaryColor();
+    z-index: 10;
 
     .logo {
+        opacity: 0;
         color: blackColor(800);
         font-size: 2rem;
         align-items: center;

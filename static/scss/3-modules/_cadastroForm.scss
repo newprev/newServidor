@@ -1,0 +1,98 @@
+@import '../1-base/colorSystem';
+@import '../1-base/btnDesign';
+
+section{
+    width: 100%;
+    height: 600px;
+
+    #titulo-new {
+        font-size: 3rem;
+        color: primaryColor(-100);
+
+        &:hover {
+            transition: .2s;
+            font-size: 3.5rem;
+
+            #titulo-prev {
+                font-size: 2.7rem;
+            }
+        }
+    }
+
+    #titulo-prev {
+        font-size: 3.2rem;
+        color: primaryColor();
+        font-weight: bold;
+
+        &:hover {
+            transition: .2s;
+            font-size: 3.5rem;
+
+            #titulo-new {
+                font-size: 2.7rem;
+            }
+        }
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: -40px 0px -20px 24px;
+        background-color: whiteColor();
+        padding: 4px 16px;
+        height: 100%;
+
+        .vertical-spacer {
+            height: 2rem;
+        }
+
+        h2 {
+            font-family: 'Bebas Neue';
+            font-size: 2rem;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            
+            .form-campo {
+                margin: 1rem;
+                background-color: whiteColor(100);
+                padding: 8px;
+                border-radius: 4px;
+
+                &:hover {
+                    transition: .2s;
+                    box-shadow: 2px 2px 1px blackColor(800);
+                }
+            }
+        }
+
+        .esq-senha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .btn-principal {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            &-entrar {
+                width: 50%;
+                @extend %btn-principal-G;
+                
+                &:hover {
+                    transition: .2s;
+                    box-shadow: 2px 2px 3px blackColor(600);
+                }
+            }
+        }
+    }
+    
+}

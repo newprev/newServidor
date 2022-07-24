@@ -3,29 +3,29 @@
 
     {% block content %}
 
-    <section class="content">
-        <h1 class="titulo">Crie Sua Conta</h1>
-        <div class="form_container">
-            <form action="{% url 'cadastro' %}" class="formulario" method="POST">
-                {% csrf_token %}
-                <label for="">Usuário/Nome do Escritório</label>
-                <input class="form__campo" name="usuario" placeholder="Escolha um nome para o usuário" required>
-
-                <label for="">Senha</label>
-                <input class="form__campo"  type="password" size="10" maxlength="10" name="senha" placeholder="Digite uma senha" required>
-
-                <label for="">Confirmação de Senha</label>
-                <input class="form__campo"  type="password" size="10" maxlength="10" name="confimacaoSenha" placeholder="Digite novamente a senha" required>
-
-                <label for="">Email</label>
-                <input class="form__campo" name="email" placeholder="seuemail@email.com" required>
-
-                <label for="">Número de licenças</label>
-                <input class="form__campo"  type="number" name="licencas" min="1" max="10" required>
-
-                <input class="form__btn" type="submit" value="enviar">
-                
+    <section class="form-section">
+        <div class="form-container">
+            <div><a id="titulo-new">NEW</a><a id="titulo-prev">PREV</a></div>
+            <!-- <div class="vertical-spacer"></div> -->
+            <h2>LOGIN</h2>
+            <h3>Acesse a sua conta no NewPrev</h3>
+            <div class="vertical-spacer"></div>
+            <form action="#" class="formulario" method="POST">
+                <input class="form-campo" name="usuario" placeholder="Entre com seu e-mail" required>
+                <input class="form-campo" type="password" size="10" maxlength="10" name="senha" placeholder="Digite sua senha" required>
             </form>
+            <div class="esq-senha">
+                <div>
+                    <a>Esqueceu a senha?</a>
+                    <a class="btn-esquce-senha" href="#">Clique aqui!</a><br>
+                </div>
+                <div>
+                    <input type="checkbox"><label> Manter-me conectado</label>
+                </div>
+            </div>
+            <div class="btn-principal">
+                <input type="button" class="btn-principal-entrar" type="submit" value="Entrar"> 
+            </div>
         </div>
     </section>
 
