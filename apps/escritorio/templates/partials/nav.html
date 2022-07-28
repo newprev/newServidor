@@ -2,7 +2,15 @@
 
 <header>
     <div class="cabecalho">
-        <a href="#" class="logo"><i class="fa-solid fa-gavel"></i> NewPrev</a>
+        {% if mostraLogo %}
+            <div id="cabecalho-logo">
+                <i class="fa-solid fa-gavel"></i>
+                <a id="titulo-new">NEW</a>
+                <a id="titulo-prev">PREV</a>
+            </div>
+        {% else %}
+            <div></div>
+        {% endif %}
         <nav class="menu">
             <ul class="menu-lista">
 

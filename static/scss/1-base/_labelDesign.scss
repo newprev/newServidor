@@ -1,0 +1,8 @@
+@import 'colorSystem';
+
+%titulo-padrao {
+    color: primaryColor();
+
+    font-weight: bold;
+    font-size: 1.8rem;
+}

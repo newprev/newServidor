@@ -35,3 +35,17 @@ input {
 ul {
     list-style: none;
 }
+
+.form-campo {
+    background-color: whiteColor(100);
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    justify-content: center;
+    border: 1px solid blackColor(800);
+
+    &:hover {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+}

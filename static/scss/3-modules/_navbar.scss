@@ -11,12 +11,23 @@
     background-color: primaryColor();
     z-index: 10;
 
-    .logo {
-        opacity: 0;
+    #cabecalho-logo {
         color: blackColor(800);
         font-size: 2rem;
         align-items: center;
         @include logoHover();
+    }
+
+    #titulo-new {
+        font-size: 1.5rem;
+        color: blackColor(800);
+
+    }
+
+    #titulo-prev {
+        font-size: 1.5rem;
+        color: blackColor(800);
+        font-weight: bold;
     }
 
     .fa-solid.fa-gavel {

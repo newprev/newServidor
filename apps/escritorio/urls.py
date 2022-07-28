@@ -4,9 +4,9 @@ from .views.viewsPages import *
 
 
 urlpatterns = [
+    path('login', login, name='login'),
     path('cadastro', cadastro, name='cadastro'),
     # path('', pages.index, name='index'),
-    # path('cadastro', cadastro, name='cadastro'),
     # path('login', pages.login, name='login'),
     # path('id=<int:escritorioId>', pages.dashboard, name='dashboard'),
     # path('escritorio=<str:nomeEscritorio>', pages.dashboard, name='dashboard'),

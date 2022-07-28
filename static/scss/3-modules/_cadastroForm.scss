@@ -1,98 +1,109 @@
 @import '../1-base/colorSystem';
 @import '../1-base/btnDesign';
+@import '../1-base/labelDesign';
+@import '../2-layouts/cards';
 
-section{
+.form-cadastro {
     width: 100%;
-    height: 600px;
+    background-color: whiteColor();
 
-    #titulo-new {
-        font-size: 3rem;
-        color: primaryColor(-100);
-
-        &:hover {
-            transition: .2s;
-            font-size: 3.5rem;
-
-            #titulo-prev {
-                font-size: 2.7rem;
-            }
-        }
+    .titulo-padrao {
+        @extend %titulo-padrao;
     }
 
-    #titulo-prev {
-        font-size: 3.2rem;
-        color: primaryColor();
-        font-weight: bold;
-
-        &:hover {
-            transition: .2s;
-            font-size: 3.5rem;
-
-            #titulo-new {
-                font-size: 2.7rem;
-            }
-        }
-    }
-
-    .form-container {
+    &-container {
         display: flex;
-        flex-direction: column;
-        width: 40%;
-        justify-content: space-evenly;
-        align-items: center;
-        margin: -40px 0px -20px 24px;
-        background-color: whiteColor();
-        padding: 4px 16px;
+        padding: 1rem;
         height: 100%;
+        justify-content: space-between;
+        align-items: center;
 
-        .vertical-spacer {
-            height: 2rem;
-        }
+        &-left {
+            width: 60%;
 
-        h2 {
-            font-family: 'Bebas Neue';
-            font-size: 2rem;
-        }
+            .colunas-forms {
+                display: flex;
+                justify-content: space-between;
+                margin: 2rem 0;
+
+                input {
+                    margin: 0.5rem 0;
+                }
+            }
+
+            .form-info-escritorio {
+                width: 45%;
+            }
+
+            .form-info-endereco {
+                width: 45%;
+                justify-content: left;
+            }
+
+            .num-complemento {
+                display: flex;
+                justify-content: space-between;
+
+                .form-campo {
+                    width: 45%;
+                }
+            }
+
+            .botoes-acao-cadastro {
+                width: 100%;
+                display: flex;
+
+                .btn-principal-entrar {
+                    @extend %btn-principal-G;
+                    margin: 0 1rem 0 0;
+                    width: 20%
+                }
     
-        form {
-            display: flex;
-            flex-direction: column;
-            
-            .form-campo {
-                margin: 1rem;
-                background-color: whiteColor(100);
-                padding: 8px;
-                border-radius: 4px;
-
-                &:hover {
-                    transition: .2s;
-                    box-shadow: 2px 2px 1px blackColor(800);
+                .btn-secondary-cancelar {
+                    @extend %btn-secondary-G;
+                    width: 20%
                 }
             }
         }
 
-        .esq-senha {
-            display: flex;
-            justify-content: space-between;
+        &-right {
+            width: 30%;
+            height: 100%;
+            margin: 0 0 0 3rem;
             align-items: center;
-            flex-direction: column;
-        }
-
-        .btn-principal {
-            width: 100%;
-            display: flex;
             justify-content: center;
 
-            &-entrar {
-                width: 50%;
-                @extend %btn-principal-G;
-                
-                &:hover {
-                    transition: .2s;
-                    box-shadow: 2px 2px 3px blackColor(600);
-                }
+            .info-cadastro-item {
+                width: 100%;
+                box-shadow: 2px 2px 3px blackColor(800);
+                @include card-info-padrao(primaryColor(100));
             }
         }
     }
-    
+
+}
+
+.fa-solid.fa-scale-balanced {
+    color: primaryColor();
+    font-size: 1.4rem;
+    margin: 8px;
+    border: 0px solid transparent;
+    padding: 24px;
+    background-color: blackColor(800);
+    border-radius: 4px;
+}
+
+.fa-solid.fa-pencil {
+    color: primaryColor();
+    font-size: 1rem;
+    margin: 4px;
+    border: 0px solid transparent;
+    padding: 8px;
+    background-color: blackColor(800);
+    border-radius: 3px;
+}
+
+.info-dados {
+    display: flex;
+    align-items: center;
 }

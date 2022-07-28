@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 
-def cadastro(request):
+def login(request):
     # if request.method == 'POST':
     #     info('POST::/cadastro')
     #     usuario = request.POST['usuario']
@@ -47,5 +47,10 @@ def cadastro(request):
     #     return redirect('login')
     # else:
     #     return render(request, 'cadastro.html')
+    context: dict = {'mostraLogo': False}
+    return render(request, 'login.html', context)
 
-    return render(request, 'cadastro.html')
+
+def cadastro(request):
+    context: dict = {'mostraLogo': True}
+    return render(request, 'cadastro.html', context)

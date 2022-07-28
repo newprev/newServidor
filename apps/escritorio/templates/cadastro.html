@@ -3,28 +3,67 @@
 
     {% block content %}
 
-    <section class="form-section">
-        <div class="form-container">
-            <div><a id="titulo-new">NEW</a><a id="titulo-prev">PREV</a></div>
-            <!-- <div class="vertical-spacer"></div> -->
-            <h2>LOGIN</h2>
-            <h3>Acesse a sua conta no NewPrev</h3>
-            <div class="vertical-spacer"></div>
-            <form action="#" class="formulario" method="POST">
-                <input class="form-campo" name="usuario" placeholder="Entre com seu e-mail" required>
-                <input class="form-campo" type="password" size="10" maxlength="10" name="senha" placeholder="Digite sua senha" required>
-            </form>
-            <div class="esq-senha">
-                <div>
-                    <a>Esqueceu a senha?</a>
-                    <a class="btn-esquce-senha" href="#">Clique aqui!</a><br>
+    <section class="form-cadastro">
+        <div class="form-cadastro-container">
+
+            <div class="form-cadastro-container-left">
+
+                <h1 class="titulo-padrao">Cadastro do escritório</h1>
+            
+                <!-- Logo com texto informativo -->
+                <div class="logo-container">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <a class="text-logo">Insira a sua logo</a>
                 </div>
-                <div>
-                    <input type="checkbox"><label> Manter-me conectado</label>
+
+                <div class="colunas-forms">
+                    <!-- Colunas com os formulários de cadastro -->
+                    <div class="form-info-escritorio">
+                        <div class="info-dados">
+                            <h3 class="titulo-padrao">Dados do escritório</h3>
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <form class="form-list">
+                            <input class="form-campo" name="nomeFantasia" placeholder="Nome fantasia" title="Nome fantasia do escritorio" autofocus required>
+                            <input class="form-campo" name="cnpj" placeholder="CNPJ" type="number" title="CNPJ do seu escritório" required>
+                            <input class="form-campo" name="celular" placeholder="Contato - Celular" title="Celular/whatsapp contendo apenas números" required>
+                            <input class="form-campo" name="email" placeholder="E-mail do escritório" title="E-mail que você receberá notificações" required>
+                        </form>
+                    </div>
+
+                    <!-- Coluna com as informações do endereço dos escritórios -->
+                    <div class="form-info-endereco">
+                        <div class="info-dados">
+                            <h3 class="titulo-padrao">Endereço do escritório</h3>
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <form class="form-list">
+                            <input class="form-campo" name="cep" placeholder="CEP" title="CEP do escritório" type="number" required>
+                            <input class="form-campo" name="cidade" placeholder="Cidade" title="Cidade onde está localizado o escritório" required>
+                            <input class="form-campo" name="bairro" placeholder="Bairro" title="Bairro onde está localizado o escritório" required>
+                            <input class="form-campo" name="rua" placeholder="Nome da rua" title="Logradouro onde está localizado o escritório" required>
+                            <div class="num-complemento">
+                                <input class="form-campo" name="numero" placeholder="Nº do imóvel" type="number" title="Nº do imóvel onde está localizado o escritório" required>
+                                <input class="form-campo" name="complemento" placeholder="Complemento" title="Complemento do logradouro onde está localizado o escritório" required>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
+                <div class="botoes-acao-cadastro">
+                    <input type="button" class="btn-principal-entrar" type="submit" value="Cadastrar"> 
+                    <input type="button" class="btn-secondary-cancelar" type="submit" value="Cancelar"> 
+                    <div class="spacer-horizontal"></div>
+                </div>
+
             </div>
-            <div class="btn-principal">
-                <input type="button" class="btn-principal-entrar" type="submit" value="Entrar"> 
+
+            <!-- Card informativo à esquerda do cadastro -->
+            <div class="form-cadastro-container-right">
+                <div class="info-cadastro-item">
+                    <div class="color-firula"></div>
+                    <a>Todas as informações cadastradas serão utilizadas nos documentos gerados pelo NewPrev. Antes de finalizar o cadastro, verifique se as informações estão corretas.</a>
+                </div>
             </div>
         </div>
     </section>
