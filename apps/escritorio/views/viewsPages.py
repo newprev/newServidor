@@ -1,4 +1,9 @@
-from django.shortcuts import render
+import email
+from django.shortcuts import render, redirect
+from django.contrib import auth, messages
+
+from apps.escritorio.models import Escritorio
+from logging import error, info, warning
 
 
 def login(request):
@@ -52,5 +57,38 @@ def login(request):
 
 
 def cadastro(request):
+    metodo: str = request.method
+    if metodo == 'POST':
+        print(f"{request.POST.get('email', 'DeuBosta')=}")
+
     context: dict = {'mostraLogo': True}
     return render(request, 'cadastro.html', context)
+
+def esqSenha(request):
+    print('\n\n*******Clicou no esqueci senha*******\n\n')
+    return login(request)
+
+def fazerLogin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        psw = request.POST.get('password')
+
+        try:
+            escritorioModel: Escritorio = Escritorio.objects.get(email=email)
+            if not escritorioModel.check_password(psw):
+                messages.error(request, 'Usuário ou senha não encontrados')
+                return redirect('login')
+
+            auth.login(request, escritorioModel)
+            messages.success(request, 'Escritório logado com sucesso!')
+            return redirect('login')
+
+        except Escritorio.DoesNotExist as err:
+            messages.error(request, 'Usuário não encontrado')
+            return redirect('login')
+        except Exception as err:
+            error(f'fazerLogin - err: {err}')
+
+
+
+        

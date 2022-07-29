@@ -6,6 +6,8 @@ from .views.viewsPages import *
 urlpatterns = [
     path('login', login, name='login'),
     path('cadastro', cadastro, name='cadastro'),
+    path('esqSenha', esqSenha, name='esqSenha'),
+    path('fazerLogin', fazerLogin, name='fazerLogin'),
     # path('', pages.index, name='index'),
     # path('login', pages.login, name='login'),
     # path('id=<int:escritorioId>', pages.dashboard, name='dashboard'),

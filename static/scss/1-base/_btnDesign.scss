@@ -20,3 +20,14 @@
     font-weight: bold;
     border: 2px solid primaryColor();
 }
+
+%btn-secondary-M {
+    background: whiteColor();
+    border-radius: 8px;
+
+    padding: 8px;
+    color: primaryColor();
+
+    font-weight: bold;
+    border: 2px solid primaryColor();
+}

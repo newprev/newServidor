@@ -42,7 +42,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     # Django framework
     'django.contrib.admin',
@@ -155,6 +154,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_USER_MODEL = 'escritorio.Escritorio'
+
+# Messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'error',
+    messages.SUCCESS: 'success',
+    messages.INFO: 'info',
+}
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # Email
 emailConfig: dict = getEmailServer()
