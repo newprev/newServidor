@@ -6,8 +6,10 @@
     <section class="form-cadastro">
         <div class="form-cadastro-container">
 
-            <div class="form-cadastro-container-left">
-
+            <form id="cadastro-form" action="{% url 'avaliaCadastro' %}" class="form-cadastro-container-left" method="POST">
+                {% csrf_token %}
+                <div class="vertical-spacer"></div>
+                
                 <h1 class="titulo-padrao">Cadastro do escritório</h1>
             
                 <!-- Logo com texto informativo -->
@@ -23,12 +25,22 @@
                             <h3 class="titulo-padrao">Dados do escritório</h3>
                             <i class="fa-solid fa-pencil"></i>
                         </div>
-                        <form class="form-list">
-                            <input class="form-campo" name="nomeFantasia" placeholder="Nome fantasia" title="Nome fantasia do escritorio" autofocus required>
-                            <input class="form-campo" name="cnpj" placeholder="CNPJ" type="number" title="CNPJ do seu escritório" required>
-                            <input class="form-campo" name="celular" placeholder="Contato - Celular" title="Celular/whatsapp contendo apenas números" required>
-                            <input class="form-campo" name="email" placeholder="E-mail do escritório" title="E-mail que você receberá notificações" required>
-                        </form>
+                        <div class="form-list">
+                            <input id="nomeFantasia" class="form-campo" value="{{ info.nomeFantasia }}" name="nomeFantasia" placeholder="Nome fantasia" title="Nome fantasia do escritorio" autofocus required>
+                            <input id="cnpj" class="form-campo" value="{{ info.cnpj }}" name="cnpj" placeholder="CNPJ" type="number" title="CNPJ do seu escritório" required>
+                            <input id="celular" class="form-campo" value="{{ info.celular }}" name="celular" placeholder="Contato - Celular" title="Celular/whatsapp contendo apenas números" required>
+                            <input id="email" class="form-campo" value="{{ info.email }}" name="email" placeholder="E-mail do escritório" title="E-mail que você receberá notificações" required>
+                        </div>
+                        <div class="vertical-spacer"></div>
+                        <div class="vertical-spacer"></div>
+                        <div class="info-dados">
+                            <h3 class="titulo-padrao">Senha</h3>
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <div class="form-list">
+                            <input id="password" class="form-campo" type="password" name="password" placeholder="Digite uma senha segura" title="Senha segura" required>
+                            <input id="secondPassword" class="form-campo" type="password" name="secondPassword" placeholder="Digite a senha novamente" title="Senha segura" required>
+                        </div>
                     </div>
 
                     <!-- Coluna com as informações do endereço dos escritórios -->
@@ -37,35 +49,66 @@
                             <h3 class="titulo-padrao">Endereço do escritório</h3>
                             <i class="fa-solid fa-pencil"></i>
                         </div>
-                        <form class="form-list">
-                            <input class="form-campo" name="cep" placeholder="CEP" title="CEP do escritório" type="number" required>
-                            <input class="form-campo" name="cidade" placeholder="Cidade" title="Cidade onde está localizado o escritório" required>
-                            <input class="form-campo" name="bairro" placeholder="Bairro" title="Bairro onde está localizado o escritório" required>
-                            <input class="form-campo" name="rua" placeholder="Nome da rua" title="Logradouro onde está localizado o escritório" required>
-                            <div class="num-complemento">
-                                <input class="form-campo" name="numero" placeholder="Nº do imóvel" type="number" title="Nº do imóvel onde está localizado o escritório" required>
-                                <input class="form-campo" name="complemento" placeholder="Complemento" title="Complemento do logradouro onde está localizado o escritório" required>
+                        <div class="form-list">
+                            <input id="cep" class="form-campo" value="{{ info.cep }}" name="cep" placeholder="CEP" title="CEP do escritório" type="number" required>
+                            <div class="cidade-estado">
+                                <input id="cidade" class="form-campo" value="{{ info.cidade }}" name="cidade" placeholder="Cidade" title="Cidade onde está localizado o escritório" required>
+                                {% include 'partials/estados.html' %}
                             </div>
-                        </form>
+                            <input id="bairro" class="form-campo" value="{{ info.bairro }}" name="bairro" placeholder="Bairro" title="Bairro onde está localizado o escritório" required>
+                            <input id="endereco" class="form-campo" value="{{ info.endereco }}" name="endereco" placeholder="Endereço" title="Logradouro onde está localizado o escritório" required>
+                            <div class="num-complemento">
+                                <input id="numero" class="form-campo" value="{{ info.numero }}" name="numero" placeholder="Nº do imóvel" type="number" title="Nº do imóvel onde está localizado o escritório" required>
+                                <input id="complemento" class="form-campo" value="{{ info.complemento }}" name="complemento" placeholder="Complemento" title="Complemento do logradouro onde está localizado o escritório" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="botoes-acao-cadastro">
-                    <input type="button" class="btn-principal-entrar" type="submit" value="Cadastrar"> 
-                    <input type="button" class="btn-secondary-cancelar" type="submit" value="Cancelar"> 
+                    <input class="btn-principal-entrar" type="submit" value="Cadastrar">
+                    <input class="btn-secondary-cancelar" type="submit" value="Cancelar">
                     <div class="spacer-horizontal"></div>
                 </div>
-
-            </div>
+            </form>
 
             <!-- Card informativo à esquerda do cadastro -->
             <div class="form-cadastro-container-right">
                 <div class="info-cadastro-item">
                     <div class="color-firula"></div>
-                    <a>Todas as informações cadastradas serão utilizadas nos documentos gerados pelo NewPrev. Antes de finalizar o cadastro, verifique se as informações estão corretas.</a>
+                    <div class="conteudo">
+                        <a>Todas as informações cadastradas serão utilizadas nos documentos gerados pelo NewPrev. Antes de finalizar o cadastro, verifique se as informações estão corretas.</a>
+                    </div>
+                </div>
+
+                <div class="info-cadastro-item-atencao">
+                    <div class="color-firula"></div>
+                    <div class="conteudo">
+                        <ul>
+                            Sua senha deve conter:
+                            <div class="vertical-spacer"></div>
+                            <li>
+                                Pelo menos 8 caracteres;
+                            </li>
+                            <li>
+                                Pelo menos uma letra minúscula;
+                            </li>
+                            <li>
+                                Pelo menos uma letra maiúscula;
+                            </li>
+                            <li>
+                                Pelo menos um número; e
+                            </li>
+                            <li>
+                                Pelo menos um caractere especial (* / - ~ ! . : ; _)
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script type="text/javascript" src={% static "js/cadastro.js" %}></script>
 
     {% endblock %}

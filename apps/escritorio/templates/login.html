@@ -12,8 +12,8 @@
             <div class="vertical-spacer"></div>
             <form action="{% url 'fazerLogin' %}" class="formulario" method="POST">
                 {% csrf_token %}
-                <input class="form-campo" name="email" placeholder="Entre com seu e-mail" required>
-                <input class="form-campo" name="password" type="password" size="20" maxlength="20" placeholder="Digite sua senha" required>
+                <input class="form-campo" name="email" placeholder="Entre com seu e-mail" value="{{ user.email }}" required>
+                <input class="form-campo" name="password" type="password" size="20" maxlength="20" value="{{ user.password }}" placeholder="Digite sua senha" required>
             
                 <div class="esq-senha">
                     <div>

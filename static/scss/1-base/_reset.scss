@@ -14,6 +14,12 @@ html {
     font-size: 1rem;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 i {
     color: blackColor(100);
 }
@@ -36,6 +42,34 @@ ul {
     list-style: none;
 }
 
+select {
+  background-color: whiteColor(100);
+  border: 1px solid blackColor(800);
+  border-radius: 4px;
+  padding: 0px 5px;
+  margin: 0.45rem 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+//   line-height: inherit;
+  outline: none;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:hover {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+
+    &:focus {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+}
+
 .form-campo {
     background-color: whiteColor(100);
     padding: 8px;
@@ -45,6 +79,11 @@ ul {
     border: 1px solid blackColor(800);
 
     &:hover {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+
+    &:focus {
         transition: .2s;
         box-shadow: 2px 2px 1px blackColor(800);
     }

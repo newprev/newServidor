@@ -43,6 +43,7 @@ rotas.register('syncIpca', SyncIpcaViewSet, basename='Sync IPCAs')
 
 urlpatterns = [
     path('escritorio/', include('apps.escritorio.urls')),
+    path('auth/', include('apps.escritorio.authUrls')),
     path('admin/', admin.site.urls),
     path('explorer/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(rotas.urls)),

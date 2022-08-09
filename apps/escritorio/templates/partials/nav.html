@@ -11,6 +11,12 @@
         {% else %}
             <div></div>
         {% endif %}
+
+        {% if user.is_authenticated  and mostraLogo %}
+            <div id="cabecalho-nome">
+                <a id="cabecalho-nome-fantasia">{{ user.nomeFantasia }}</a>
+            </div>
+        {% endif %}
         <nav class="menu">
             <ul class="menu-lista">
 
