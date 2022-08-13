@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Escritorio
-from .validators import *
+from utils.validators import *
 
 
 class EscritoriosSerializer(serializers.ModelSerializer):

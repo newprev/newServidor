@@ -5,12 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @admin.register(Advogado)
 class AdminAdvogado(admin.ModelAdmin, LoginRequiredMixin):
-    list_display = ['advogadoId', 'nomeAdvogado', 'escritorioId', 'login', 'email', 'ativo', 'confirmado']
-    list_display_links = ['advogadoId', 'escritorioId', 'login', 'email', 'nomeAdvogado']
+    list_display = ['advogadoId', 'primeiroNome', 'escritorioId', 'email', 'ativo', 'confirmado']
+    list_display_links = ['advogadoId', 'escritorioId', 'email', 'primeiroNome']
     list_filter = ['escritorioId', ]
     list_editable = ['ativo', 'confirmado']
     readonly_fields = ['advogadoId', ]
-    ordering = ['nomeAdvogado', ]
+    ordering = ['primeiroNome', ]
     list_per_page = 15
 
     def get_form(self, request, obj=None, **kwargs):

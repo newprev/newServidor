@@ -1,13 +1,10 @@
 from django.urls import path
 
-from .views.viewsPages import *
+from .viewPages import cadastroAdvogado
 
 
 urlpatterns = [
-    path('login', login, name='login'),
-    path('cadastro', cadastro, name='cadastro'),
-    path('esqSenha', esqSenha, name='esqSenha'),
-    path('dashboard', dashboard, name='dashboard'),
+    path('cadastroAdvogado', cadastroAdvogado, name='cadastroAdvogado'),
     # path('', pages.index, name='index'),
     # path('login', pages.login, name='login'),
     # path('id=<int:escritorioId>', pages.dashboard, name='dashboard'),

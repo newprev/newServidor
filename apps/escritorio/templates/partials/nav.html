@@ -2,7 +2,7 @@
 
 <header>
     <div class="cabecalho">
-        {% if mostraLogo %}
+        {% if dashboard %}
             <div id="cabecalho-logo">
                 <i class="fa-solid fa-gavel"></i>
                 <a id="titulo-new">NEW</a>
@@ -12,7 +12,7 @@
             <div></div>
         {% endif %}
 
-        {% if user.is_authenticated  and mostraLogo %}
+        {% if user.is_authenticated  and dashboard %}
             <div id="cabecalho-nome">
                 <a id="cabecalho-nome-fantasia">{{ user.nomeFantasia }}</a>
             </div>
@@ -24,7 +24,7 @@
                     <li class="menu-lista-item"><a class="menu-item-link" href="#">Home</a></li>
                     <li class ="menu-lista-item"><a class ="menu-item-link ativo" href="escritorio={{user.nomeEscritorio}}">Seu Escritório</a></li>
                     <li class="menu-lista-item"><a class="menu-item-link" href="#">Sobre nós</a></li>
-                    <li class="menu-lista-item"><a class="menu-item-link" href="#">Logout</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link" href="{% url 'fazerLogout' %}">Logout</a></li>
 
                 {% else %}
                     <li class="menu-lista-item"><a class="menu-item-link " href="#">Home</a></li>

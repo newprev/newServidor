@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from apps.advogado.views import *
+from apps.advogado.viewsSerializer import *
 from apps.escritorio.views.viewSerializer import EscritorioViewSet
 from apps.ferramentas.views import ConvMonViewSet, TetosPrevViewSet, CarenciasLei91ViewSet
 from apps.informacoes.views import IndicadoresViewSet, ExpectativaSobrevidaViewSet, IndicesAtuMonetariaViewSet, SalarioMinimoViewSet, IpcaMensalViewSet, TipoBeneficioViewSet, \
@@ -43,7 +43,9 @@ rotas.register('syncIpca', SyncIpcaViewSet, basename='Sync IPCAs')
 
 urlpatterns = [
     path('escritorio/', include('apps.escritorio.urls')),
-    path('auth/', include('apps.escritorio.authUrls')),
+    path('authEscritorio/', include('apps.escritorio.authUrls')),
+    path('authAdvogado/', include('apps.advogado.authUrls')),
+    path('advogado/', include('apps.advogado.urls')),
     path('admin/', admin.site.urls),
     path('explorer/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(rotas.urls)),

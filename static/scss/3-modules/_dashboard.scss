@@ -1,0 +1,61 @@
+@import '../1-base/btnDesign';
+@import '../1-base/colorSystem';
+@import '../1-base/labelDesign';
+
+
+.sem-cadastro-section {
+    padding: 2rem;
+
+    h3 {
+        @extend %saudacoes-padrao;
+    }
+
+    .main-container {
+        display: flex;
+        justify-content: space-around;
+
+        .texto-saudacoes {
+            width: 25%;
+        }
+
+        .container-central {
+            width: 40%;
+            height: 70vh;
+            display: flex;
+            padding-top: 10rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .fa-solid.fa-address-card {
+                font-size: 5rem;
+                color: rgba($color: primaryColor(200), $alpha: 0.3);
+            }
+
+            a {
+                box-shadow: 2px 2px 3px blackColor(800);
+                @extend %btn-secondary-G;
+
+                &:hover {
+                    transition: .2s;
+                    box-shadow: 2px 2px 3px blackColor(600);
+                }
+            }
+
+            #texto-central-maior {
+                color: blackColor(600);
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+
+            #texto-central-menor {
+                color: blackColor(600);
+                font-size: 1.5rem;
+            }
+        }
+
+        .horizontal-spacer.m {
+            width: 20%;
+        }
+    }
+}

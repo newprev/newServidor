@@ -1,12 +1,15 @@
 from django.db import models
+
 from apps.escritorio.models import Escritorio
+from apps.advogado.models import Advogado
+
 from django.utils import timezone
 
 
 class ChaveAcesso(models.Model):
     chaveId = models.AutoField('chaveId', primary_key=True, auto_created=True)
     escritorioId = models.ForeignKey(Escritorio, on_delete=models.CASCADE, related_name='Escritorio')
-    qtdChaves = models.PositiveSmallIntegerField('qtdChaves', null=False)
+    advogadoId = models.ForeignKey(Advogado, on_delete=models.CASCADE, related_name='Advogado')
     dataUltAlt = models.DateTimeField('dataUltAlt', default=timezone.now, null=False)
     dataCadastro = models.DateTimeField('dataCadastro', default=timezone.now, null=False)
 

@@ -2,7 +2,7 @@ from datetime import datetime
 from django.db import models
 from utils.helpers import getEstados
 from django.contrib.auth.models import AbstractUser
-from .validators import validaCNPJ, validaEmail, validaApenasNumero
+from utils.validators import validaCNPJ, validaEmail, validaApenasNumero
 
 
 class Escritorio(AbstractUser):

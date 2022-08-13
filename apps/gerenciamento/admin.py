@@ -3,7 +3,7 @@ from apps.gerenciamento.models import ChaveAcesso
 
 
 class AdminChaveAcesso(admin.ModelAdmin):
-    list_display = ['chaveId', 'qtdChaves', '_escritorio']
+    list_display = ['chaveId', '_escritorio']
     exclude = ['dataCadastro']
 
     def _escritorio(self, instFK):

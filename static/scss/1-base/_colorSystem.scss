@@ -49,7 +49,7 @@ $White: #FFFF;
         $colorReturn: $Blue-solitude;
     }
     @else if ($valor == 200) {
-        $colorReturn: $Lavander;
+        $colorReturn: $Lavender;
     }
 
     @return $colorReturn;

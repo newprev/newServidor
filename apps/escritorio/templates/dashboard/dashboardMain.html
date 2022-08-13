@@ -1,0 +1,30 @@
+{% extends '../base.html' %}
+{% load static %}
+
+    {% block content %}
+
+        {% if  semChaves %}
+            <section class="sem-cadastro-section">
+                <div class="main-container">
+                    <div class="texto-saudacao">
+                        <h3>Olá! Seja bem-vindo(a) de volta!</h3>
+                    </div>
+                    <div class="container-central">
+                        <div class="img-background">
+                            <i class="fa-solid fa-address-card"></i>
+                        </div>
+                        <div class="texto-central">
+                            <p id="texto-central-maior">Você não possui advogados cadastrados</p>
+                            <p id="texto-central-menor">Cadastre quem irá trabalhar no sistema?</p>
+                        </div>
+                        <a class="btn cadastra-advogado" href="{% url 'cadastroAdvogado' %}">Cadastrar advogados</a>
+                    </div>
+                    <div class="horizontal-spacer m"></div>
+                </div>
+            </section>
+
+        {% else %}
+            <h1>Dashboard tem chaves</h1>
+        {% endif %}
+
+    {% endblock %}
