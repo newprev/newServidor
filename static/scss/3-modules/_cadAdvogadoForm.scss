@@ -3,3 +3,31 @@
 @import '../1-base/labelDesign';
 @import '../2-layouts/cards';
 
+
+.img-usuario {
+    width: 30%;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    background-color: rgba($color: primaryColor() , $alpha: 0.1);
+    color: primaryColor();
+    margin-top: 10px;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+
+
+    input[type="file"] {
+        display: none;
+    }
+
+    // img {
+    //     width: -webkit-fill-available;
+    //     border-radius: 8rem;
+    // }
+}
+

@@ -1,13 +1,16 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from .views.viewsPages import *
 
+# app_name = 'escritorio'
 
 urlpatterns = [
-    path('login', login, name='login'),
-    path('cadastro', cadastro, name='cadastro'),
-    path('esqSenha', esqSenha, name='esqSenha'),
-    path('dashboard', dashboard, name='dashboard'),
+    path('login/', login, name='login'),
+    path('cadastro/', cadastro, name='cadastro'),
+    path('esqSenha/', esqSenha, name='esqSenha'),
+    path('dashboard/', dashboard, name='dashboard'),
     # path('', pages.index, name='index'),
     # path('login', pages.login, name='login'),
     # path('id=<int:escritorioId>', pages.dashboard, name='dashboard'),
@@ -20,3 +23,6 @@ urlpatterns = [
     # path('editaEscritorio/<str:nomeEscritorio>/', pages.editaEscritorio, name='editaEscritorio'),
     # path('atualizaEscritorio', pages.atualizaEscritorio, name='atualizaEscritorio')
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,11 +12,11 @@ class AdvogadoSerializer(serializers.ModelSerializer):
         if not validaCpf(data['cpf']):
             raise serializers.ValidationError({"cpf": "CPF inválido."})
 
-        if not validaTamanhoNumOAB(data['numeroOAB']):
-            raise serializers.ValidationError({"numeroOAB": "O número da OAB precisa ter 9 dígitos."})
+        if not validaTamanhoNumOAB(data['oab']):
+            raise serializers.ValidationError({"oab": "O número da OAB precisa ter 9 dígitos."})
 
-        if not validaApenasNumerosOAB(data['numeroOAB']):
-            raise serializers.ValidationError({"numeroOAB": "O número da OAB deve conter apenas números."})
+        if not validaApenasNumerosOAB(data['oab']):
+            raise serializers.ValidationError({"oab": "O número da OAB deve conter apenas números."})
 
         # if not validanomeAdvogado(data['nomeAdvogado']):
         #     raise serializers.ValidationError({"nomeAdvogado": "O nome do advogado não deve conter números."})

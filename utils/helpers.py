@@ -60,3 +60,9 @@ def getEstadosDict() -> List:
         {'nome': 'Sergipe', 'uf': 'SE'},
         {'nome': 'Tocantins', 'uf': 'TO'},
     ]
+
+
+def campoAlterado(campoOriginal, campoAlterado) -> bool:
+    if campoAlterado is None or campoAlterado == '':
+        return False
+    return campoOriginal != campoAlterado

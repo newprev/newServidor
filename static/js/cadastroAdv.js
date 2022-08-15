@@ -17,7 +17,7 @@ function iniciaCampos(){
 function avaliaCep(jsonEndereco) {
 
     if (jsonEndereco.length != 0) {
-        limpaCampos();
+        limpaCamposEndereco();
         
         if (jsonEndereco.localidade){
             document.getElementById('cidade').value = (jsonEndereco.localidade);
@@ -30,7 +30,7 @@ function avaliaCep(jsonEndereco) {
     }
 }
 
-function limpaCampos() {
+function limpaCamposEndereco() {
     const listaForm = [
         document.getElementById('cidade'),
         document.getElementById('bairro'),
@@ -38,6 +38,14 @@ function limpaCampos() {
         document.getElementById('numero'),
         document.getElementById('complemento'),
     ];
+    
+    for (campo of listaForm) {
+        campo.value=("");
+    }
+}
+
+function limpaTodosCampos() {
+    const listaForm = document.getElementsByTagName('input');
     
     for (campo of listaForm) {
         campo.value=("");

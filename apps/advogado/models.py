@@ -9,7 +9,7 @@ class Advogado(models.Model):
     escritorioId = models.ForeignKey(Escritorio, on_delete=models.CASCADE)
     primeiroNome = models.CharField(max_length=20, null=False, blank=False)
     sobrenome = models.CharField(max_length=40, null=False, blank=False)
-    email = models.EmailField(max_length=40, null=False, blank=False)
+    email = models.EmailField(max_length=40, null=False, blank=False, unique=True)
     senha = models.CharField(max_length=30, null=False, blank=False)
     oab = models.CharField(max_length=9, null=False, blank=False, unique=True)
     cpf = models.CharField(max_length=11, null=False, blank=False, unique=True)
@@ -18,6 +18,7 @@ class Advogado(models.Model):
     admin = models.BooleanField(default=False)
     ativo = models.BooleanField(default=True)
     confirmado = models.BooleanField(default=False)
+    fotoPath = models.ImageField(upload_to='foto/%m/%Y', blank=True)
     dataUltAlt = models.DateTimeField(default=timezone.now, null=False)
     dataCadastro = models.DateTimeField(default=timezone.now, null=False)
 
@@ -25,7 +26,27 @@ class Advogado(models.Model):
         db_table = "Advogados"
 
     def __str__(self):
-        return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.numeroOAB}"
+        return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.oab}"
+
+    def toJson(self):
+        return {
+            "advogadoId": self.advogadoId,
+            "escritorioId": self.escritorioId,
+            "primeiroNome": self.primeiroNome,
+            "sobrenome": self.sobrenome,
+            "email": self.email,
+            "senha": self.senha,
+            "oab": self.oab,
+            "cpf": self.cpf,
+            "nacionalidade": self.nacionalidade,
+            "estadoCivil": self.estadoCivil,
+            "admin": self.admin,
+            "ativo": self.ativo,
+            "confirmado": self.confirmado,
+            "fotoPath": self.fotoPath,
+            "dataUltAlt": self.dataUltAlt,
+            "dataCadastro": self.dataCadastro
+        }
 
 
 class TrocaSenha(models.Model):
@@ -46,3 +67,35 @@ class TrocaSenha(models.Model):
 
     class Meta:
         db_table = "TrocaSenha"
+
+
+class EnderecoAdvogado(models.Model):
+    enderecoId = models.AutoField(name='enderecoId', primary_key=True, auto_created=True)
+    advogadoId = models.ForeignKey(Advogado, on_delete=models.CASCADE)
+    endereco = models.CharField(name='endereco', blank=False, null=False, max_length=60)
+    cidade = models.CharField(name='cidade', blank=False, null=False, max_length=60)
+    estado = models.CharField(name='estado', blank=False, null=False, max_length=60)
+    bairro = models.CharField(name='bairro', blank=False, null=False, max_length=60)
+    cep = models.IntegerField(name='cep', blank=False, null=False)
+    numero = models.CharField(name='numero', blank=False, null=False, max_length=60)
+    complemento = models.CharField(name='complemento', blank=False, null=False, max_length=60)
+    dataUltAlt = models.DateTimeField(default=timezone.now, null=False)
+    dataCadastro = models.DateTimeField(default=timezone.now, null=False)
+
+    class Meta:
+        db_table = "EnderecoAdvogado"
+
+    def toJson(self):
+        return {
+            "enderecoId": self.enderecoId,
+            "advogadoId": self.advogadoId,
+            "endereco": self.endereco,
+            "cidade": self.cidade,
+            "estado": self.estado,
+            "bairro": self.bairro,
+            "cep": self.cep,
+            "numero": self.numero,
+            "complemento": self.complemento,
+            "dataUltAlt": self.dataUltAlt,
+            "dataCadastro": self.dataCadastro
+        }

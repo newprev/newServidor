@@ -22,7 +22,7 @@ class Escritorio(AbstractUser):
     estado = models.CharField(max_length=2, choices=ESTADO, null=False, default='SP', blank=True)
     bairro = models.CharField(max_length=50, blank=True)
     ativo = models.BooleanField(default=True)
-    qtdChaves = models.IntegerField(default=0, validators=[validaApenasNumero])
+    logoPath = models.ImageField(upload_to='logo/%m/%Y', blank=True)
     dataUltAlt = models.DateTimeField(default=datetime.now(), null=False)
     dataCadastro = models.DateTimeField(default=datetime.now(), null=False)
 
@@ -37,3 +37,22 @@ class Escritorio(AbstractUser):
 
     def retEmail(self):
         return self.email
+
+    def toJson(self):
+        return {
+            "escritorioId": self.escritorioId,
+            "nomeFantasia": self.nomeFantasia,
+            "cnpj": self.cnpj,
+            "telefone": self.telefone,
+            "email": self.email,
+            "endereco": self.endereco,
+            "numero": self.numero,
+            "cep": self.cep,
+            "complemento": self.complemento,
+            "cidade": self.cidade,
+            "estado": self.estado,
+            "bairro": self.bairro,
+            "ativo": self.ativo,
+            "dataUltAlt": self.dataUltAlt,
+            "dataCadastro": self.dataCadastro
+        }

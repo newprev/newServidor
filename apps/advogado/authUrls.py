@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .viewPages import avaliacadastroAdvogado
+from .viewPages import avaliaCadastroAdvogado
 
 
 urlpatterns = [
-    path('avaliaCadAdvogado', avaliacadastroAdvogado, name='avaliaCadAdvogado'),
+    path('avaliaCadAdvogado', avaliaCadastroAdvogado, name='avaliaCadAdvogado'),
     # path('', pages.index, name='index'),
     # path('login', pages.login, name='login'),
     # path('id=<int:escritorioId>', pages.dashboard, name='dashboard'),

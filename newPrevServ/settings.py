@@ -86,7 +86,10 @@ ROOT_URLCONF = 'newPrevServ.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'apps/advogado/templates',
+            'apps/escritorio/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +147,11 @@ USE_TZ = True
 
 # STATIC_URL = '/static/'
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'media/'),
+]
+STATIC_ROOT = 'producao/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'newPrevServ/static')]
 
 
@@ -176,6 +183,11 @@ SERVER_EMAIL = emailConfig['serverEmail']
 EMAIL_USE_TLS = emailConfig['emailUseTls']
 EMAIL_USE_SSL = emailConfig['emailUseSsl']
 
+# Media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+# MEDIA_URL = os.path.join(BASE_DIR, 'media/')
+
 # LOGS
 from logging import INFO
 import sentry_sdk
@@ -203,3 +215,6 @@ sentry_sdk.init(
 
 from logs.newLoggin import NewLogging
 logs = NewLogging()
+
+
+CKEDITOR_IMAGE_BACKEND = "pillow"

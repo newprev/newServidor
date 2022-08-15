@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from django.shortcuts import render, redirect, Http404, HttpResponse
 from django.contrib import auth, messages
 from django.core.exceptions import ValidationError
@@ -5,6 +7,7 @@ from django.db.utils import IntegrityError
 
 from apps.escritorio.models import Escritorio
 from apps.gerenciamento.models import ChaveAcesso
+from apps.advogado.models import Advogado
 
 from logging import error, info, warning
 from utils.validators import validaSenha, validaEmail, validaTelefone
@@ -117,32 +120,10 @@ def avaliaCadastro(request):
         auth.logout(request)
         return redirect('cadastro')
 
-def dashboard(request):
-    contexto: dict = { 
-        'dashboard': True,
-        'semChaves': True    
-    }
-    semChaves: bool = True
-
-    if request.user.is_authenticated:
-        escritorio: Escritorio = request.user
-
-        try:
-            chavesAcesso: ChaveAcesso = ChaveAcesso.objects.filter(escritorioId=escritorio)
-            semChaves = chavesAcesso.count() == 0
-        except ChaveAcesso.DoesNotExist:
-            semChaves = True
-
-        contexto['semChaves'] = semChaves
-        return render(request, "dashboard/dashboardMain.html", context=contexto)
-
-    else:
-        return HttpResponse(Http404)
-
 def cadastro(request):
     metodo: str = request.method
     contexto: dict = {
-        'dashboard': True,
+        'cadastro': True,
         'estados': getEstadosDict()
     }
 
@@ -169,6 +150,47 @@ def cadastro(request):
             request.session['requestForm'] = None
 
     return render(request, 'cadastro.html', contexto)
+
+def dashboard(request):
+    contexto: dict = {
+        'dashboard': True,
+        'semChaves': True
+    }
+    temChaves: bool = False
+
+    if request.user.is_authenticated:
+        escritorio: Escritorio = request.user
+        contexto['escritorio'] = escritorio.toJson()
+
+        try:
+            chavesAcesso: ChaveAcesso = ChaveAcesso.objects.filter(escritorioId=escritorio)
+            temChaves = chavesAcesso.count() != 0
+            contexto['qtdChavesTotais'] = chavesAcesso.count()
+
+            qtdChavesUtilizadas: List = []
+            for c in chavesAcesso.all():
+                if c.advogadoId is not None:
+                    qtdChavesUtilizadas.append(c)
+
+            contexto['qtdChaves'] = len(qtdChavesUtilizadas)
+            contexto['aCadastrar'] = contexto['qtdChavesTotais'] > contexto['qtdChaves']
+
+        except ChaveAcesso.DoesNotExist:
+            temChaves = False
+
+        contexto['temChaves'] = temChaves
+
+        if temChaves:
+            contexto['listaAdvogados']: List = []
+            for chave in chavesAcesso.all():
+                if chave.advogadoId is not None:
+                    advogado: Advogado = Advogado.objects.get(advogadoId=chave.advogadoId)
+                    contexto['listaAdvogados'].append(advogado.toJson())
+            
+        return render(request, "dashboard/dashboardMain.html", context=contexto)
+
+    else:
+        return HttpResponse(Http404)
 
 def esqSenha(request):
     print('\n\n*******Clicou no esqueci senha*******\n\n')

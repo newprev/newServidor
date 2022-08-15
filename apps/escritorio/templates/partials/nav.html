@@ -2,17 +2,19 @@
 
 <header>
     <div class="cabecalho">
-        {% if dashboard %}
+        {% if cadastro %}
             <div id="cabecalho-logo">
                 <i class="fa-solid fa-gavel"></i>
                 <a id="titulo-new">NEW</a>
                 <a id="titulo-prev">PREV</a>
             </div>
+        {% elif dashboard %}
+            <div> </div>
         {% else %}
-            <div></div>
+            <div> </div>
         {% endif %}
 
-        {% if user.is_authenticated  and dashboard %}
+        {% if user.is_authenticated and dashboard %}
             <div id="cabecalho-nome">
                 <a id="cabecalho-nome-fantasia">{{ user.nomeFantasia }}</a>
             </div>
