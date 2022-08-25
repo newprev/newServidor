@@ -15,10 +15,10 @@
                 <label class="img-usuario" for="foto-advogado">
                     {% if info.fotoPath is not None and info.fotoPath != '' %}
                     Atualizar arquivo
-                    <img src="..{{ info.fotoPath.url }}" alt="Foto usuario">
+                    <img src="../..{{ info.fotoPath.url }}" alt="Foto usuario">
                     {% else %}
                     Enviar arquivo
-                    <img src="../media/user.png" alt="Foto usuario">
+                    <img src="{% static 'images/user.png' %}" alt="Foto usuario">
                     {% endif %}
                     <input id="foto-advogado" type="file" name="foto-advogado" class="foto-advogado">
                 </label>

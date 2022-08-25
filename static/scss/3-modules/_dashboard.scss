@@ -2,218 +2,61 @@
 @import '../1-base/colorSystem';
 @import '../1-base/labelDesign';
 @import '../2-layouts/menuLateral';
+@import '../3-modules/cardAdvogado';
 
+
+// Container principal dashboard
 .container-principal {
     display: flex;
-    justify-content: space-between;
-}
+    height: 90vh;
+    background-color: whiteColor(300);
 
-// Menu lateral
-.menu-lateral {
-    @include design-menu-lateral();
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 20%;
-
-    .info-empresa {
-        width: 100%;
-        margin-top: 0.5rem;
-        padding: 0.8rem;
-        align-self: flex-start;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px blackColor(600);
-
-        .CNPJ {
-            font-family: 'Bebas Neue';
-            font-size: 1.5rem;
-            color: primaryColor();
-        }
-
-        .chaves-acesso {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            &-descricao {
-                color: blackColor(600);
-            }
-
-            &-qtd {
-                font-weight: bold;
-                font-size: 1rem;
-            }
-        }
-    }
-
-    .menu-funcionalidades {
+    .loading-dashboard {
+        width: 65%;
         height: 100%;
-        width: 100%;
         display: flex;
+        padding: 2rem;
         flex-direction: column;
-
-        li {
-            padding: 0.3rem 1rem;
-
-            &:hover {
-                background-color: whiteColor(200);
-                border-radius: 4px;
-                box-shadow: 1px 1px 1px prymaryColor();
-
-                .fa-solid.fa-building-columns, .fa-solid.fa-user-group,  
-                .fa-solid.fa-cloud-arrow-up, .fa-duotone.fa-chair-office {
-                    transition: 0.5s;
-                    color: blackColor(300);
-                }
-            }
-
-            a, .fa-solid.fa-building-columns, 
-            .fa-solid.fa-user-group,  .fa-solid.fa-cloud-arrow-up,
-            .fa-duotone.fa-chair-office {
-                font-size: 1.2rem;
-                color: primaryColor();
-            }
-        }
-
-        .info-configuracoes, .info-cadastro {
-            margin-bottom: auto;
-        }
-
-        #menu-cadastrar-advogado {
-            @extend %btn-secondary-M;
-            margin-top: auto;
-            flex-grow: 1;
-            max-height: 40px;
-            
-            i {
-                color: primaryColor();
-            }
-
-            &:hover {
-                transition: 0.3s;
-                box-shadow: 2px 2px 2px blackColor(600);
-            }
-        }
+        align-self: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
     }
 
-    .vertical-spacer {
-        height: 5vh;
-    }
-
-    #cabecalho-logo {
-        font-size: 1rem;
-        align-items: center;
-        @include logoHoverMenu();
-
-        .fa-solid.fa-gavel {
-            color: primaryColor();
-            font-size: 1.5rem;
-        }
-    }
-
-    #titulo-new {
-        font-size: 1.5rem;
-        color: primaryColor();
-    }
-
-    #titulo-prev {
-        font-size: 1.5rem;
-        color: primaryColor();
-        font-weight: bold;
+    #barra-lateral {
+        box-shadow: 4px 2px 2px rgba($color: blackColor(600), $alpha: 0.3);
     }
 }
 
-.grid-advogados-cadastrados {
+.grid-advogados-container{
+    padding: 1rem 2rem;
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    padding-right: 1rem;
-    padding-top: 1rem;
-
-    .card-padrao-advogado {
-        width: 18rem;
-        height: 8rem;
-        background-color: whiteColor();
-        border-radius: 8px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        .info-lista{
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-
-            h4 {
-                font-size: 1.3rem;
-                font-weight: bold;
-                word-wrap: break-word;
-            }
-        }
-
-        .botoes-acao {
-            width: 15%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            li {
-                padding: 1rem;
-            }
-
-            .fa-solid.fa-trash {
-                color: errorColor();
-                font-size: 1rem;
-                margin: 4px;
-                border: 0px solid transparent;
-                padding: 8px;
-                border-radius: 3px;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: blackColor(800);
-                    box-shadow: 1px 1px 1px rgba($color: blackColor(200), $alpha: 0.3);
-                }
-            }
-
-            .fa-solid.fa-pencil {
-                &:hover {
-                    box-shadow: 1px 1px 1px rgba($color: blackColor(200), $alpha: 0.3);
-                }
-            }
-        }
-    }
-
-    .card-a-cadastrar {
-        border: 2px dashed primaryColor();
-        width: 18rem;
-        height: 8rem;
-        background-color: whiteColor();
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
+    overflow-y: auto;
+    
+    // Saudação inicial dashboard
+    .texto-saudacao {
+        width: 50%;
+        padding: 1rem;
 
         h3 {
-            font-size: 1rem;
-            color: primaryColor();
-            font-weight: bold;
+            @extend %saudacoes-padrao;
+        }
+    }
+
+    .grid-advogados-cadastrados {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding-right: 1rem;
+
+        .card-padrao-advogado {
+            @extend %card-padrao-advogado;
+            margin-bottom: 1rem;
         }
 
-        i {
-            border-radius: 4px;
-            color: blackColor(400);
-            background-color: rgba($color: primaryColor(), $alpha: 0.3);
-            padding: 0.5rem;
-            cursor: pointer;
-        }
-
-        &:hover {
-            box-shadow: 2px 2px 2px blackColor(700);
+        .card-a-cadastrar {
+            @extend %card-a-cadastrar;
         }
     }
 }
@@ -223,17 +66,9 @@
     padding: 2rem;
     width: 100%;
 
-    h3 {
-        @extend %saudacoes-padrao;
-    }
-
     .container-conteudo {
         display: flex;
         justify-content: space-around;
-
-        .texto-saudacoes {
-            width: 25%;
-        }
 
         .container-central {
             width: 40%;
@@ -249,9 +84,9 @@
                 color: rgba($color: primaryColor(200), $alpha: 0.3);
             }
 
-            a {
+            .btn.cadastra-advogado {
                 box-shadow: 2px 2px 3px blackColor(800);
-                @extend %btn-secondary-G;
+                @extend %btn-secondary-invertido-G;
 
                 &:hover {
                     transition: .2s;
@@ -263,6 +98,7 @@
                 color: blackColor(600);
                 font-size: 1.5rem;
                 font-weight: bold;
+                white-space: nowrap;
             }
 
             #texto-central-menor {

@@ -1,0 +1,43 @@
+{% for plano in planos %}
+<div class="card-plano-container">
+    <div class="titulo-container">
+        <i class="{{ plano.icone }}"></i>
+        <h2 class="titulo-plano">{{ plano.titulo }}</h2>
+    </div>
+    <h4 class="subtitulo-plano">{{ plano.subtitulo }}</h4>
+    <div class="valor-plano">
+        <p class="valor">R$ {{ plano.valor }}</p>
+
+        {% if plano.freqCobranca == 'ME' %}
+            <p>por advogado / por mês</p>
+        {% elif plano.freqCobranca == 'AN' %}
+            <p>por advogado / por ano</p>
+        {% else %}
+            <p>vitalício</p>
+        {% endif %}
+    </div>
+    <form id="envio-chaves" hx-post="{% url 'avaliaAddChave' plano.planoId %}">
+        {% csrf_token %}
+        <input class="add-credito" type="submit" value="Confirmar aquisição">
+    </form>
+
+    <div class="vertical-spacer-p"></div>
+
+    <ul class="funcionalidades-lista">
+        {% for funcionalidade in plano.funcionalidades %}
+            {% if funcionalidade != '' %}
+                <li><i class="fa-solid fa-caret-right"></i>{{ funcionalidade }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <a id="volta-dashboard" href="{% url 'dashboard' %}" hidden></a>
+</div>
+{% endfor %}
+
+{% block js%}
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+</script>
+{% endblock js %}

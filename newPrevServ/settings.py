@@ -149,8 +149,10 @@ USE_TZ = True
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'static', 'images/'),
     os.path.join(BASE_DIR, 'media/'),
 ]
+
 STATIC_ROOT = 'producao/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'newPrevServ/static')]
 
@@ -183,6 +185,9 @@ SERVER_EMAIL = emailConfig['serverEmail']
 EMAIL_USE_TLS = emailConfig['emailUseTls']
 EMAIL_USE_SSL = emailConfig['emailUseSsl']
 
+# Login
+LOGIN_URL = 'escritorio/login'
+
 # Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -199,19 +204,19 @@ sentryLogging = LoggingIntegration(
     event_level=INFO
 )
 
-sentry_sdk.init(
-    dsn=getLoggingPsd(),
-    integrations=[sentryLogging, DjangoIntegration()],
-
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+# sentry_sdk.init(
+#     dsn=getLoggingPsd(),
+#     integrations=[sentryLogging, DjangoIntegration()],
+#
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     # We recommend adjusting this value in production.
+#     traces_sample_rate=1.0,
+#
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )
 
 from logs.newLoggin import NewLogging
 logs = NewLogging()

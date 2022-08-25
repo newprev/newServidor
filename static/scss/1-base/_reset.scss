@@ -5,6 +5,11 @@ html {
     background-color: whiteColor(300);
 }
 
+header {
+    position: relative;
+    z-index: 1;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -68,6 +73,10 @@ select {
         transition: .2s;
         box-shadow: 2px 2px 1px blackColor(800);
     }
+}
+
+table td, table td * {
+    vertical-align: top;
 }
 
 .form-campo {

@@ -1,5 +1,14 @@
 from typing import List
 
+frequenciaPlano = [
+    ('ME', 'Mensal'),
+    ('AN', 'Anual'),
+    ('VI', 'Vitalicio'),
+]
+
+def listaFrequenciaPlanos():
+    return frequenciaPlano
+
 def getEstados():
     return [
         ('AC', 'Acre'),

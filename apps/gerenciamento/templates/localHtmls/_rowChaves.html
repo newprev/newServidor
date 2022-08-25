@@ -1,0 +1,28 @@
+<table class="table table-borderless table-sm padrao">
+  <thead class="cabecalho-minhas-chaves">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Plano</th>
+      <th scope="col">Advogado</th>
+      <th scope="col">Validade</th>
+      <th scope="col">Data aquisição</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for chave in chaves %}
+    <tr>
+        <th scope="row">{{ chave.chaveId }}</th>
+        <td>{{ chave.planoId.titulo }}</td>
+
+        {% if chave.advogadoId is not None %}
+          <td>{{ chave.advogadoId.primeiroNome }} {{ chave.advogadoId.sobrenome }}</td>
+        {% else %}
+        <td>--</td>
+        {% endif %}
+
+        <td>{{ chave.planoId.dataValidade }}</td>
+        <td>{{ chave.dataAquisicao }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

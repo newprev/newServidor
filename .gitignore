@@ -17,3 +17,4 @@ prevServEnv/
 logs/historicoLogs/*.txt
 
 .vscode/
+/media/foto/*

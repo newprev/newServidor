@@ -1,0 +1,61 @@
+@import '../1-base/btnDesign';
+@import '../1-base/colorSystem';
+@import '../1-base/labelDesign';
+
+.add-chaves-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: center;
+    background-color: whiteColor(300);
+
+    .vertical-spacer-p {
+        height: 2rem;
+    }
+
+    .vertical-spacer-m {
+        height: 4rem;
+    }
+
+    .vertical-spacer-g {
+        height: 8rem;
+    }
+
+    .add-chaves-titulo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h2 {
+            @extend %titulo-padrao;
+            font-size: 2.5rem;
+        }
+    }
+
+    .mensal-anual {
+        display: flex;
+        width: 20%;
+        justify-content: space-around;
+        align-items: stretch;
+
+        h5 {
+            font-size: 1.7rem;
+            margin: 0 1rem;
+            font-weight: bold;
+            color: blackColor(600);
+        }
+
+        .form-check.form-switch {
+            transform: scale(1.3);
+        }
+    }
+
+    .cards-planos-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        padding: 2rem;
+    }
+}

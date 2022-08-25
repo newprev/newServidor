@@ -1,6 +1,7 @@
 // Funções em Js para manipular o front
 function iniciaCampos(){
     const cepInput = document.querySelector('#cep');
+    const imgInput = document.querySelector('#imagem-logo');
 
     cepInput.onchange = async function (event) {
         const strCep = String(cepInput.value);
@@ -11,6 +12,13 @@ function iniciaCampos(){
         else {
             console.log("Não é cep");
         }
+    };
+
+    imgInput.onchange = function (e) {
+        const logoContainer = document.getElementById('logoId');
+        logoContainer.style.border = '2px solid #3F4E8C';
+        logoContainer.style.boxShadow = '2px 2px 2px #6F757B';
+        logoContainer.innerHTML = 'Imagem enviada';
     };
 }
 

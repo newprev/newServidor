@@ -18,7 +18,7 @@ class Advogado(models.Model):
     admin = models.BooleanField(default=False)
     ativo = models.BooleanField(default=True)
     confirmado = models.BooleanField(default=False)
-    fotoPath = models.ImageField(upload_to='foto/%m/%Y', blank=True)
+    fotoPath = models.ImageField(upload_to='foto/%Y/%m', blank=True)
     dataUltAlt = models.DateTimeField(default=timezone.now, null=False)
     dataCadastro = models.DateTimeField(default=timezone.now, null=False)
 
@@ -28,7 +28,7 @@ class Advogado(models.Model):
     def __str__(self):
         return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.oab}"
 
-    def toJson(self):
+    def toDict(self):
         return {
             "advogadoId": self.advogadoId,
             "escritorioId": self.escritorioId,
@@ -85,7 +85,7 @@ class EnderecoAdvogado(models.Model):
     class Meta:
         db_table = "EnderecoAdvogado"
 
-    def toJson(self):
+    def toDict(self):
         return {
             "enderecoId": self.enderecoId,
             "advogadoId": self.advogadoId,
@@ -99,3 +99,17 @@ class EnderecoAdvogado(models.Model):
             "dataUltAlt": self.dataUltAlt,
             "dataCadastro": self.dataCadastro
         }
+
+
+class Contato(models.Model):
+    Id = models.AutoField(name='Id', primary_key=True, auto_created=True)
+    contatoId = models.IntegerField(name='contatoId', null=False, blank=False)
+    telefone = models.IntegerField(name='telefone', null=True, blank=True)
+    isWhatsapp = models.BooleanField(name='isWhatsapp', default=True)
+    isTelegram = models.BooleanField(name='isTelegram', default=True)
+    ativo = models.BooleanField(name='ativo', default=True)
+    dataUltAlt = models.DateTimeField('dataUltAlt', default=timezone.now, null=False)
+    dataCadastro = models.DateTimeField('dataCadastro', default=timezone.now, null=False)
+
+    class Meta:
+        db_table = "Contato"

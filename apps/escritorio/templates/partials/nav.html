@@ -3,20 +3,18 @@
 <header>
     <div class="cabecalho">
         {% if cadastro %}
-            <div id="cabecalho-logo">
+            <a id="cabecalho-logo" href="{% url 'home' %}">
                 <i class="fa-solid fa-gavel"></i>
-                <a id="titulo-new">NEW</a>
-                <a id="titulo-prev">PREV</a>
-            </div>
-        {% elif dashboard %}
-            <div> </div>
-        {% else %}
+                <p id="titulo-new">NEW</p>
+                <p id="titulo-prev">PREV</p>
+            </a>
+        {% elif login %}
             <div> </div>
         {% endif %}
 
         {% if user.is_authenticated and dashboard %}
             <div id="cabecalho-nome">
-                <a id="cabecalho-nome-fantasia">{{ user.nomeFantasia }}</a>
+                <a id="cabecalho-nome-fantasia" href="{% url 'dashboard' %}">{{ user.nomeFantasia }}</a>
             </div>
         {% endif %}
         <nav class="menu">

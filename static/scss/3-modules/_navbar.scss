@@ -5,23 +5,29 @@
 .cabecalho {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1.5rem 2rem;
     width: 100%;
     height: 5rem;
     background-color: primaryColor();
-    z-index: 10;
+    z-index: 1;
+    position: relative;
+    box-shadow: 4px 2px 2px rgba($color: blackColor(600), $alpha: 0.3);
 
     #cabecalho-logo {
+        display: flex;
+        justify-content: space-between;
         color: blackColor(800);
-        font-size: 2rem;
+        font-size: 3rem;
         align-items: center;
         @include logoHover();
+        cursor: pointer;
     }
 
     #titulo-new {
         font-size: 1.5rem;
         color: blackColor(800);
-
+        margin-left: 0.5rem;
     }
 
     #titulo-prev {
@@ -32,7 +38,7 @@
 
     #cabecalho-nome-fantasia {
         font-family: "Bebas Neue";
-        font-size: 2rem;
+        font-size: 3rem;
         color: whiteColor();
         font-weight: 350;
     }

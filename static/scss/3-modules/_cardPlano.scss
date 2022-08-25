@@ -1,0 +1,71 @@
+@import '../1-base/btnDesign';
+@import '../1-base/colorSystem';
+@import '../1-base/labelDesign';
+
+
+.card-plano-container {
+    padding: 2rem;
+    background-color: whiteColor();
+    border-radius: 2rem;
+    
+    .titulo-container {
+        display: flex;
+        justify-content: left;
+        align-items: baseline;
+
+        i {
+            font-weight: bold;
+            color: primaryColor();
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-weight: bold;
+            color: blackColor(400);
+            padding: 0 1rem;
+        }
+    }
+
+    .subtitulo-plano {
+        font-size: 1.3rem;
+        color: blackColor(600);
+    }
+
+    .valor-plano {
+        padding: 1.5rem 0;
+        display: flex;
+        align-items: baseline;
+
+        p {
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .valor {
+            font-size: 3.8rem;
+            font-style: normal;
+        }
+    }
+
+    .funcionalidades-lista {
+        i {
+            color: primaryColor(200);
+            padding: 0 .5rem;
+        }
+
+        li {
+            font-size: 1.5rem;
+            color: blackColor(100);
+            font-style: italic;
+        }
+    }
+
+    .add-credito {
+        @extend %btn-secondary-invertido-G;
+
+        &:hover {
+            transition: .3s;
+            box-shadow: 2px 2px 6px blackColor(600);
+        }
+    }
+}

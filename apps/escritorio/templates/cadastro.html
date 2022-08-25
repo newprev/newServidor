@@ -6,17 +6,18 @@
     <section class="form-cadastro">
         <div class="form-cadastro-container">
 
-            <form id="cadastro-form" action="{% url 'avaliaCadastro' %}" class="form-cadastro-container-left" method="POST">
+            <form id="cadastro-form" action="{% url 'avaliaCadastro' %}" class="form-cadastro-container-left" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="vertical-spacer"></div>
                 
                 <h1 class="titulo-padrao">Cadastro do escritório</h1>
             
                 <!-- Logo com texto informativo -->
-                <div class="logo-container">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <a class="text-logo">Insira a sua logo</a>
-                </div>
+                <label id="logoId" class="logo-container" for="imagem-logo">
+                    Enviar logo
+                    <img src="../media/logo.png" alt="Imagem logo">
+                    <input id="imagem-logo" type="file" name="imagem-logo" class="imagem-logo">
+                </label>
 
                 <div class="colunas-forms">
                     <!-- Colunas com os formulários de cadastro -->

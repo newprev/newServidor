@@ -21,6 +21,18 @@
     border: 2px solid primaryColor();
 }
 
+%btn-secondary-invertido-G {
+    background: primaryColor();
+    border-radius: 8px;
+    width: 100%;
+
+    padding: 16px;
+    color: whiteColor();
+
+    font-weight: bold;
+    border: 2px solid transparent;
+}
+
 %btn-secondary-M {
     background: whiteColor();
     border-radius: 8px;

@@ -1,4 +1,5 @@
-from typing import List, Tuple
+from time import sleep
+from typing import List, Tuple, Generator
 
 from django.shortcuts import render, redirect, Http404, HttpResponse
 from django.contrib import auth, messages
@@ -84,6 +85,10 @@ def avaliaCadastro(request):
                 numero=numero,
                 complemento=complemento
             )
+
+            if 'imagem-logo' in request.FILES:
+                escritorio.logoPath = request.FILES['imagem-logo']
+
             escritorio.save()
 
             auth.login(request, escritorio)
@@ -119,6 +124,7 @@ def avaliaCadastro(request):
     else:
         auth.logout(request)
         return redirect('cadastro')
+
 
 def cadastro(request):
     metodo: str = request.method
@@ -156,37 +162,23 @@ def dashboard(request):
         'dashboard': True,
         'semChaves': True
     }
-    temChaves: bool = False
 
     if request.user.is_authenticated:
         escritorio: Escritorio = request.user
-        contexto['escritorio'] = escritorio.toJson()
+        contexto['escritorio'] = escritorio.toDict()
 
-        try:
-            chavesAcesso: ChaveAcesso = ChaveAcesso.objects.filter(escritorioId=escritorio)
-            temChaves = chavesAcesso.count() != 0
-            contexto['qtdChavesTotais'] = chavesAcesso.count()
 
-            qtdChavesUtilizadas: List = []
-            for c in chavesAcesso.all():
-                if c.advogadoId is not None:
-                    qtdChavesUtilizadas.append(c)
+        chavesAcesso: ChaveAcesso = ChaveAcesso.objects.filter(escritorioId=escritorio)
+        contexto['qtdChavesTotais'] = chavesAcesso.count()
 
-            contexto['qtdChaves'] = len(qtdChavesUtilizadas)
-            contexto['aCadastrar'] = contexto['qtdChavesTotais'] > contexto['qtdChaves']
+        qtdChavesUtilizadas: List = []
+        for c in chavesAcesso.all():
+            if c.advogadoId is not None:
+                qtdChavesUtilizadas.append(c)
 
-        except ChaveAcesso.DoesNotExist:
-            temChaves = False
+        contexto['qtdChaves'] = len(qtdChavesUtilizadas)
+        contexto['aCadastrar'] = contexto['qtdChavesTotais'] > contexto['qtdChaves']
 
-        contexto['temChaves'] = temChaves
-
-        if temChaves:
-            contexto['listaAdvogados']: List = []
-            for chave in chavesAcesso.all():
-                if chave.advogadoId is not None:
-                    advogado: Advogado = Advogado.objects.get(advogadoId=chave.advogadoId)
-                    contexto['listaAdvogados'].append(advogado.toJson())
-            
         return render(request, "dashboard/dashboardMain.html", context=contexto)
 
     else:
@@ -208,7 +200,7 @@ def fazerLogin(request):
                 return redirect('login')
 
             auth.login(request, escritorioModel)
-            messages.success(request, 'Escritório logado com sucesso!')
+            # messages.success(request, 'Escritório logado com sucesso!')
             return redirect('dashboard')
 
         except Escritorio.DoesNotExist as err:
@@ -224,6 +216,12 @@ def fazerLogout(request):
 
     return render(request, 'login.html', context=contexto)
 
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
+    return redirect('login')
+
 def login(request, *args, **kwargs):
     if request.method == 'POST':
         try:
@@ -234,54 +232,10 @@ def login(request, *args, **kwargs):
         except Exception as err:
             print(f'----------- err: {err=}')
 
-
-    #     usuario = request.POST['usuario']
-    #     senha = request.POST['senha']
-    #     confirmaSenha = request.POST['confimacaoSenha']
-    #     email = request.POST['email']
-    #     licencas = request.POST['licencas']
-    #     print('1 - ', usuario, senha, confirmaSenha, email, licencas)
-
-    #     # Validação de usuário
-    #     if campoVazio(usuario):
-    #         messages.error(request, 'Usuário não pode ser vazio')
-    #         return redirect('cadastro')
-
-    #     if Escritorio.objects.filter(username=usuario).exists():
-    #         messages.error(request, 'Usuário/Escritório já cadastrado por outro usuário !!!')
-    #         return redirect('cadastro')
-
-    #     # Validação de email
-    #     if campoVazio(email):
-    #         messages.error(request, 'Email já cadastrado por outro usuário !!!')
-    #         return redirect('cadastro')
-
-    #     if Escritorio.objects.filter(email=email).exists():
-    #         print('Email Usuario já cadastrado')
-    #         return redirect('cadastro')
-
-    #     # Validação de senha
-    #     if senhasIguais(senha, confirmaSenha):
-    #         messages.error(request, 'As Senhas não são iguais')
-    #         return redirect('cadastro')
-
-    #     # Criando e Cadastrando novo usuario/escritorio
-    #     escritorio = Escritorio.objects.create_user(
-    #         username=usuario, nomeEscritorio=usuario, email=email, password=senha, qtdChaves=licencas, is_staff=False
-    #     )
-    #     info(f"INSERT::cadastro - {escritorio.escritorioId=}")
-    #     escritorio.save()
-    #     emailBoasVindas(escritorio)
-
-    #     messages.success(request, 'Usuário cadastrado com sucesso !!!')
-
-    #     return redirect('login')
-    # else:
-    #     return render(request, 'cadastro.html')
-
     context: dict = {
         'dashboard': False,
         'mostraNomeEscritorio': False,
+        'login': True,
         'user': {
             'email': ''
         }

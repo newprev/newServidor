@@ -23,6 +23,38 @@
         &-left {
             width: 60%;
 
+            .logo-container {
+                width: 30%;
+                border-radius: 8px;
+                padding: 1rem 2rem;
+                border: 2px dashed rgba($color:primaryColor(), $alpha: 0.7);
+                color: primaryColor();
+                margin-top: 10px;
+                cursor: pointer;
+            
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: center;
+                align-items: center;
+                font-size: 1rem;
+                font-weight: bold;
+            
+            
+                input[type="file"] {
+                    display: none;
+                }
+            
+                img {
+                    border-radius: 25%;
+            
+                    &:hover {
+                        transition: .3s;
+                        box-shadow: 2px 2px 6px rgba($color: blackColor() , $alpha: 0.5);
+                    }
+                }
+            }
+
+
             .colunas-forms {
                 display: flex;
                 justify-content: space-between;
@@ -125,15 +157,15 @@
     height: 1.5rem;
 }
 
-.fa-solid.fa-scale-balanced {
-    color: primaryColor();
-    font-size: 1.4rem;
-    margin: 8px;
-    border: 0px solid transparent;
-    padding: 24px;
-    background-color: blackColor(800);
-    border-radius: 4px;
-}
+// .fa-solid.fa-scale-balanced {
+//     color: primaryColor();
+//     font-size: 1.4rem;
+//     margin: 8px;
+//     border: 0px solid transparent;
+//     padding: 24px;
+//     background-color: blackColor(800);
+//     border-radius: 4px;
+// }
 
 .fa-solid.fa-pencil {
     color: primaryColor();

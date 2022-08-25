@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+    <section class="minhas-chaves-container">
+        <!-- Cabeçalho informativo -->
+        <div class="cabecalho-saudacao">
+            <h2 class="titulo-saudacao">Minhas chaves</h2>
+            <h5 class="subtitulo-saudacao">Abaixo segue o relatório com todas as chaves adquiridas</h5>
+            <div class="separador-firula"></div>
+        </div>
+
+        <div class="minhas-chaves-container-principal">
+
+            <div class="placeholder-tabela" hx-get="{% url 'buscaMinhasChaves' %}" hx-swap="outerHTML" hx-trigger="load">
+            <!-- Container da tabela -->
+            {% include 'localHtmls/_placeHolderBoot.html' %}
+            </div>
+
+            <!-- Container à direita contendo as últimas aquisições -->
+            <div class="placeholder-ultimas-aquisicoes" hx-get="{% url 'buscaMinhasUltimasAquisicoes' %}" hx-swap="outerHTML" hx-trigger="load">
+              {% include 'localHtmls/_placeHolderBoot.html' %}
+            </div>
+
+          </div>
+    </section>
+
+    {% endblock %}

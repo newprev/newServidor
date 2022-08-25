@@ -4,8 +4,7 @@ from rest_framework import routers
 from apps.advogado.viewsSerializer import *
 from apps.escritorio.views.viewSerializer import EscritorioViewSet
 from apps.ferramentas.views import ConvMonViewSet, TetosPrevViewSet, CarenciasLei91ViewSet
-from apps.informacoes.views import IndicadoresViewSet, ExpectativaSobrevidaViewSet, IndicesAtuMonetariaViewSet, SalarioMinimoViewSet, IpcaMensalViewSet, TipoBeneficioViewSet, \
-    EspecieBeneficioViewSet
+from apps.informacoes.views import *
 from apps.sincron.views import SyncIpcaViewSet
 
 from rest_framework import permissions
@@ -46,6 +45,7 @@ urlpatterns = [
     path('authEscritorio/', include('apps.escritorio.authUrls')),
     path('authAdvogado/', include('apps.advogado.authUrls')),
     path('advogado/', include('apps.advogado.urls')),
+    path('gerencial/', include('apps.gerenciamento.url')),
     path('admin/', admin.site.urls),
     path('explorer/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(rotas.urls)),
