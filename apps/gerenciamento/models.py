@@ -1,5 +1,6 @@
 import datetime
 
+import uuid as uuid
 from django.db import models
 
 from apps.escritorio.models import Escritorio
@@ -31,16 +32,16 @@ class Planos(models.Model):
             "planoId": self.planoId,
             "titulo": self.titulo,
             "subtitulo": self.subtitulo,
-            "valor": self.valor,
+            "valor": float(self.valor) if self.valor is not None else 0,
             "melhorEscolha": self.melhorEscolha,
             "freqCobranca": self.freqCobranca,
             "funcionalidades": self.funcionalidades.split(';'),
             "ativo": self.ativo,
             "icone": self.icone,
-            "dataInicio": self.dataInicio,
-            "dataValidade": self.dataValidade,
-            "dataUltAlt": self.dataUltAlt,
-            "dataCadastro": self.dataCadastro,
+            "dataInicio": f"{self.dataInicio}",
+            "dataValidade": f"{self.dataValidade}",
+            "dataUltAlt": f"{self.dataUltAlt}",
+            "dataCadastro": f"{self.dataCadastro}",
         }
 
     class Meta:
@@ -49,6 +50,7 @@ class Planos(models.Model):
 
 class ChaveAcesso(models.Model):
     chaveId = models.AutoField('chaveId', primary_key=True, auto_created=True)
+    uuid = models.UUIDField('uuid', default=uuid.uuid4)
     escritorioId = models.ForeignKey(Escritorio, on_delete=models.CASCADE, related_name='Escritorio')
     planoId = models.ForeignKey(Planos, on_delete=models.CASCADE, related_name='Planos')
     advogadoId = models.IntegerField(name='advogadoId', null=True, blank=True)
@@ -62,12 +64,13 @@ class ChaveAcesso(models.Model):
     def toDict(self):
         return {
             'chaveId': self.chaveId,
-            'escritorioId': self.escritorioId,
-            'planoId': self.planoId,
-            'advogadoId': self.advogadoId,
+            'uuid': f"{self.uuid}",
+            'escritorioId': self.escritorioId.toDict(),
+            'planoId': self.planoId.toDict() if self.planoId is not None else None,
+            'advogadoId': self.advogadoId.toDict() if self.advogadoId is not None else None,
             'ativo': self.ativo,
-            'dataUltAlt': self.dataUltAlt,
-            'dataAquisicao': self.dataAquisicao,
+            'dataUltAlt': f"{self.dataUltAlt}",
+            'dataAquisicao': f"{self.dataAquisicao}",
         }
 
     class Meta:

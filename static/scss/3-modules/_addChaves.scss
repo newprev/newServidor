@@ -11,6 +11,73 @@
     align-items: center;
     background-color: whiteColor(300);
 
+    .aquisicoes-container {
+        width: 100%;
+        background-color: whiteColor();
+        padding: 1rem;
+        box-shadow: 4px 4px 4px rgba($color: blackColor(600), $alpha: (0.5));
+
+        .aquisicoes-cabecalho {
+            
+            h2 {
+                @extend %titulo-padrao;
+                font-size: 2.5rem;
+            }
+
+            &-detalhes {
+                display: flex;
+                width: 35%;
+                justify-content: space-between;
+
+                .valor-total {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+
+                    h5 {
+                        font-size: 1rem;
+                        color: blackColor(600);
+                    }
+
+                    h4 {
+                        font-size: 1.8rem;
+                        color: blackColor(300);
+                        font-weight: bold;
+                    }
+                }
+
+                .qtd-planos {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+
+                    h5 {
+                        font-size: 1rem;
+                        color: blackColor(600);
+                    }
+
+                    h4 {
+                        font-size: 1.8rem;
+                        color: blackColor(300);
+                        font-weight: bold;
+                    }
+                }
+                
+            }
+        }
+
+        .aquisicoes-lista {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            .card {
+                margin: 1rem;
+                box-shadow: 4px 4px 5px rgba($color: primaryColor(), $alpha: (0.2));
+            }
+        }
+    }
+
     .vertical-spacer-p {
         height: 2rem;
     }

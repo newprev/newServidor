@@ -53,6 +53,6 @@ class Escritorio(AbstractUser):
             "estado": self.estado,
             "bairro": self.bairro,
             "ativo": self.ativo,
-            "dataUltAlt": self.dataUltAlt,
-            "dataCadastro": self.dataCadastro
+            "dataUltAlt": f"{self.dataUltAlt}",
+            "dataCadastro": f"{self.dataCadastro}"
         }

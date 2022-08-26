@@ -8,11 +8,13 @@ from .views import *
 
 urlpatterns = [
     path('addChaves/', addChaves, name='addChaves'),
-    path('buscaPlanos/<int:mensal>', buscaPlanos, name='buscaPlanos'),
-    path('avaliaAddChave/<int:planoId>', avaliaAddChave, name='avaliaAddChave'),
-    path('minhasChaves', minhasChaves, name='minhasChaves'),
-    path('buscaMinhasChaves', buscaMinhasChaves, name='buscaMinhasChaves'),
-    path('buscaMinhasUltimasAquisicoes', buscaMinhasUltimasAquisicoes, name='buscaMinhasUltimasAquisicoes'),
+    path('buscaPlanos/', buscaPlanos, name='buscaPlanos'),
+    path('avaliaAddChave/<int:planoId>/', avaliaAddChave, name='avaliaAddChave'),
+    path('minhasChaves/', minhasChaves, name='minhasChaves'),
+    path('buscaMinhasChaves/', buscaMinhasChaves, name='buscaMinhasChaves'),
+    path('buscaMinhasUltimasAquisicoes/', buscaMinhasUltimasAquisicoes, name='buscaMinhasUltimasAquisicoes'),
+    path('atualizaCarrinho/', atualizaCarrinho, name="atualizaCarrinho"),
+    path('deletaChaveCarrinho/<str:uuid>/', deletaChaveCarrinho, name='deletaChaveCarrinho'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

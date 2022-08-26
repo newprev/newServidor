@@ -1,12 +1,12 @@
 import datetime
 import json
 from time import sleep
-from typing import List
+from typing import List, Generator
 
 from django.contrib import messages
 from django.db.models import QuerySet
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 from apps.advogado.models import Advogado
 from apps.escritorio.models import Escritorio
@@ -20,22 +20,52 @@ def addChaves(request):
 
     return render(request, 'addChaves.html', contexto)
 
+def atualizaCarrinho(request):
+    contexto: dict = {
+        'dashboard': True,
+        'valorTotal': 0.0,
+        'qtdPlanosAdquiridos': 0,
+        'listaPlanos': []
+    }
 
-@require_POST
+    if request.method in ('GET', 'get', 'delete', 'DELETE'):
+        carrinhoChaves = []
+        if 'carrinhoChaves' in request.session:
+            carrinhoChaves = request.session['carrinhoChaves']
+            # request.session['carrinhoChaves'] = None
+
+        contexto['carrinhoChaves'] = carrinhoChaves
+
+        contexto['qtdPlanosAdquiridos'] = len(carrinhoChaves)
+
+        return render(request, 'detalhesCompra.html', contexto)
+    else:
+        return render(request, 'detalhesCompra.html', {})
+
+
 def avaliaAddChave(request, planoId: int):
     if request.user.is_authenticated:
         try:
             escritorio: Escritorio = request.user
             plano: Planos = get_object_or_404(Planos, planoId=planoId)
-            chave: ChaveAcesso = ChaveAcesso.objects.create(
+            chave: ChaveAcesso = ChaveAcesso(
                 escritorioId=escritorio,
                 planoId=plano,
             )
-            chave.save()
 
-            headers: dict = {'HX-Trigger': json.dumps({'chaveAdicionada': 'Chave adquirida com sucesso!'})}
+            # headers: dict = {'HX-Trigger': json.dumps({'chaveAdicionada': 'Chave adquirida com sucesso!'})}
+            carrinhoChaves = []
+            if 'carrinhoChaves' in request.session and request.session['carrinhoChaves'] is not None:
+                carrinhoChaves = request.session['carrinhoChaves']
+                # request.session['carrinhoChaves'] = None
 
-            return HttpResponse(status=204, headers=headers)
+                carrinhoChaves.append(chave.toDict())
+
+            request.session['carrinhoChaves'] = carrinhoChaves
+
+            # return HttpResponse(status=204, headers=headers)
+            return redirect('atualizaCarrinho')
+
         except Exception as err:
             messages.error(request, 'Aconteceu um erro inesperado!')
             print(f"avaliaAddChave - {err=}")
@@ -125,7 +155,7 @@ def buscaMinhasUltimasAquisicoes(request):
         print(f"minhasChaves - {err=}")
 
 
-def buscaPlanos(request, mensal: bool = True):
+def buscaPlanos(request):
     contexto: dict = {}
     try:
         listaPlanosQueryset: Planos = Planos.objects.filter(
@@ -139,6 +169,20 @@ def buscaPlanos(request, mensal: bool = True):
         print(f"buscaPlanos - {err=}")
     finally:
         return render(request, 'cardPlano.html', contexto)
+
+
+def deletaChaveCarrinho(request, uuid: str):
+    print(f"{request.method=}")
+    print(f"{uuid=}")
+
+    carrinhoChaves: List[dict] = request.session['carrinhoChaves']
+    if carrinhoChaves is None:
+        return HttpResponse(status=204)
+
+    carrinhoChaves = [chave for chave in carrinhoChaves if chave['uuid'] != uuid]
+    request.session['carrinhoChaves'] = carrinhoChaves
+
+    return redirect('atualizaCarrinho')
 
 
 def minhasChaves(request):

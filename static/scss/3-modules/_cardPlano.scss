@@ -7,6 +7,7 @@
     padding: 2rem;
     background-color: whiteColor();
     border-radius: 2rem;
+    box-shadow: 4px 4px 4px rgba($color: blackColor(600), $alpha: (0.3));
     
     .titulo-container {
         display: flex;

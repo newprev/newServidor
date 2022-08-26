@@ -16,7 +16,7 @@
             <p>vitalício</p>
         {% endif %}
     </div>
-    <form id="envio-chaves" hx-post="{% url 'avaliaAddChave' plano.planoId %}">
+    <form id="envio-chaves" hx-post="{% url 'avaliaAddChave' plano.planoId %}" hx-target="#aquisicoes-container">
         {% csrf_token %}
         <input class="add-credito" type="submit" value="Confirmar aquisição">
     </form>
