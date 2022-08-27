@@ -28,10 +28,10 @@ class Advogado(models.Model):
     def __str__(self):
         return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.oab}"
 
-    def toDict(self):
+    def toDict(self, enviaEscritorio: bool = True):
         return {
             "advogadoId": self.advogadoId,
-            "escritorioId": self.escritorioId,
+            "escritorioId": self.escritorioId.toDict() if enviaEscritorio else self.escritorioId.escritorioId,
             "primeiroNome": self.primeiroNome,
             "sobrenome": self.sobrenome,
             "email": self.email,

@@ -6,7 +6,7 @@
     <!-- Cards dos advogados cadastrados -->
     {% if  not primeiroAdvogado %}
     <section class="grid-advogados-cadastrados">
-        {% for advogado in listaAdvogados %}
+        {% for chave in chaves %}
             {% include 'dashboard/localHtmls/_cardAdvogado.html' %}
         {% endfor %}
         

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem 1.3rem 0 .3rem;
+    padding: 1rem 0.7rem 0.7rem 0.7rem;
 
     img {
         padding: 1rem;
@@ -26,6 +26,7 @@
 
         h4 {
             padding-right: 0.5rem;
+            margin: 0;
         }
     }
 
@@ -33,7 +34,28 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-between;
+        padding-left: 0;
+
+        .oab-container, .email-container, .plano-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            h5 {
+                font-size: 1.3rem;
+                color: blackColor(600);
+                margin-bottom: 0;
+            }
+
+            h6 {
+                font-size: 0.8rem;
+                color: primaryColor();
+                font-weight: bold;
+                margin-bottom: 0;
+            }
+
+        }
 
         h4 {
             font-size: 1.3rem;
@@ -43,8 +65,8 @@
 
         .spacer-firula {
             height: 1px;
-            width: 95%;
-            margin-bottom: 0.3rem;
+            width: 100%;
+            margin-bottom: 0.8rem;
             margin-top: -0.1rem;
             align-self: center;
 
@@ -53,14 +75,12 @@
     }
 
     .botoes-acao {
-        width: 15%;
+        width: 5%;
         display: flex;
         flex-direction: column;
         align-items: center;
 
         li {
-            padding: 1rem;
-
             .btn.btn-primary {
                 background-color: black;
             }

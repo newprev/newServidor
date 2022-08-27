@@ -1,59 +1,58 @@
 {% load static %}
 
-    {% block content %}
+{% block content %}
 
+{% if chave.advogadoId is not None %}
 <div class="card-padrao-advogado">
     <!-- <img class="foto-advogado"> -->
-    {% if advogado.fotoPath is None or advogado.fotoPath == '' %}
+    {% if chave.advogadoId.fotoPath is None or chave.advogadoId.fotoPath == '' %}
     <img id="sem-foto" src="../media/user.png" alt="Foto usuario">
     {% else %}
-    <img id="com-foto" src="..{{ advogado.fotoPath.url }}" alt="Foto usuario">
+    <img id="com-foto" src="..{{ chave.advogadoId.fotoPath.url }}" alt="Foto usuario">
     {% endif %}
 
     <ul class="info-lista">
-        <!-- <li><input id="advogadoId" value="{{ advogado.advogadoId }}"></li> -->
+        <!-- <li><input id="advogadoId" value="{{ chave.advogadoId.advogadoId }}"></li> -->
         <li></li>
         <li class="linha-nome">
-            <h4>{{ advogado.primeiroNome }} {{ advogado.sobrenome }}</h4>
+            <h4>{{ chave.advogadoId.primeiroNome }} {{ chave.advogadoId.sobrenome }}</h4>
 
             <div class="form-check form-switch">
-                {% if advogado.ativo %}
-                <input onclick="pegaInfoAdvogado('{{ advogado.advogadoId }}');" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                {% if chave.advogadoId.ativo %}
+                <input onclick="pegaInfoAdvogado('{{ chave.advogadoId.advogadoId }}');" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
                 {% else %}
-                <input onclick="pegaInfoAdvogado('{{ advogado.advogadoId }}');" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                <input onclick="pegaInfoAdvogado('{{ chave.advogadoId.advogadoId }}');" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                 {% endif %}
                 <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                <button id="botaoEscondido{{ advogado.advogadoId }}" hx-get="{% url 'desAtivaAdvogado' advogado.advogadoId %}" hidden></button>
+                <button id="botaoEscondido{{ chave.advogadoId.advogadoId }}" hx-get="{% url 'desAtivaAdvogado' chave.advogadoId.advogadoId %}" hidden></button>
             </div>
 
-            <!-- <label class="new-switch">
-                {% if advogado.ativo %}
-                <input type="checkbox" checked>
-                {% else %}
-                <input type="checkbox">
-                {% endif %}
-                <span class="new-slider"></span>
-              </label> -->
+        </li>
+        <li class="plano-container">
+            <h6>{{ chave.planoId.titulo }}</h6>
         </li>
         <li class="spacer-firula"></li>
-        <li>
-            <h5>OAB: {{ advogado.oab }}</h5>
+        <li class="oab-container">
+            <h5>{{ chave.advogadoId.oab }}</h5>
+            <h6>OAB</h6>
         </li>
-        <li>
-            <h5>E-mail: {{ advogado.email }}</h5>
+        <li></li>
+        <li class="email-container">
+            <h5>{{ chave.advogadoId.email }}</h5>
+            <h6>E-mail</h6>
         </li>
         <li></li>
         <li></li>
     </ul>
     <ul class="botoes-acao">
-        <li><a href="{% url 'atualizaCadastro' advogado.advogadoId %}"><i class="fa-solid fa-pencil"></i></a></li>
-        <button id="btn-deleta-advogado" type="button" data-bs-toggle="modal" data-bs-target="#modal{{ advogado.advogadoId }}">
+        <li><a href="{% url 'atualizaCadastro' chave.advogadoId.advogadoId %}"><i class="fa-solid fa-pencil"></i></a></li>
+        <button id="btn-deleta-advogado" type="button" data-bs-toggle="modal" data-bs-target="#modal{{ chave.advogadoId.advogadoId }}">
             <i class="fa-solid fa-trash"></i>
         </button>
     </ul>
 </div>
 
-<div class="modal fade" id="modal{{ advogado.advogadoId }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal{{ chave.advogadoId.advogadoId }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -61,16 +60,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <h4>Deseja excluir o(a) advogado(a) {{ advogado.primeiroNome }}? Essa ação não pode ser desfeita.</h4>
+        <h4>Deseja excluir o(a) advogado(a) {{ chave.advogadoId.primeiroNome }}? Essa ação não pode ser desfeita.</h4>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a type="button" href={% url 'excluiAdvogado' advogado.advogadoId %} class="btn btn-primary">Deletar</a>
-        <!-- <button type="button" hx-delete={% url 'excluiAdvogado' advogado.advogadoId %} class="btn btn-primary">Deletar</button> -->
+        <a type="button" href={% url 'excluiAdvogado' chave.advogadoId.advogadoId %} class="btn btn-primary">Deletar</a>
+        <!-- <button type="button" hx-delete={% url 'excluiAdvogado' chave.advogadoId.advogadoId %} class="btn btn-primary">Deletar</button> -->
         </div>
     </div>
     </div>
 </div>
+{% endif %}
 
 <script type="text/javascript" src={% static "js/modalCardAdvogado.js" %}></script>
 

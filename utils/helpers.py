@@ -6,6 +6,15 @@ frequenciaPlano = [
     ('VI', 'Vitalicio'),
 ]
 
+
+def buscaAdvNaLista(listaAdvogados: List, advogadoId: int):
+    for adv in listaAdvogados:
+        if adv.advogadoId == advogadoId:
+            return adv
+
+    return None
+
+
 def listaFrequenciaPlanos():
     return frequenciaPlano
 

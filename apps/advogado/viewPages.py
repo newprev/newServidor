@@ -13,7 +13,7 @@ from apps.advogado.models import Advogado, EnderecoAdvogado
 from apps.escritorio.models import Escritorio
 from apps.gerenciamento.models import ChaveAcesso
 from utils.enums.imgManipulacaoEnum import ImgManipulacao
-from utils.helpers import getEstadosDict, campoAlterado
+from utils.helpers import getEstadosDict, campoAlterado, buscaAdvNaLista
 from utils.imageManager import redimensionarImagem
 from utils.validators import validaTelefone, validaEmail
 
@@ -164,13 +164,15 @@ def atualizaCadastro(request, **kwargs):
 def buscaAdvogados(request):
     contexto: dict = {
         'temChaves': False,
-        'primeiroAdvogado': True
+        'primeiroAdvogado': True,
+        'chaves': []
     }
+    temChaves: bool = False
 
     try:
         escritorio: Escritorio = request.user
 
-        chavesAcesso: QuerySet = ChaveAcesso.objects.filter(escritorioId=escritorio)
+        chavesAcesso: QuerySet = ChaveAcesso.objects.filter(escritorioId=escritorio, ativo=True)
         temChaves = chavesAcesso.count() != 0
 
     except ChaveAcesso.DoesNotExist:
@@ -178,10 +180,28 @@ def buscaAdvogados(request):
 
     if temChaves:
         advogadoIdsChaves: Generator = (chave.advogadoId for chave in chavesAcesso.all())
-        listaAdvogados = Advogado.objects.filter(advogadoId__in=advogadoIdsChaves).order_by('-ativo', 'primeiroNome')
-        contexto['primeiroAdvogado'] = listaAdvogados.count() == 0
+        listaAdvogados: List[Advogado] = Advogado.objects.filter(advogadoId__in=advogadoIdsChaves).order_by('-ativo', 'primeiroNome').all()
+        contexto['primeiroAdvogado'] = len(listaAdvogados) == 0
 
-        contexto['listaAdvogados'] = listaAdvogados
+        for chave in chavesAcesso.all():
+            dictChave: dict = chave.toDict()
+
+            if chave.advogadoId is not None:
+                dictChave['advogadoId'] = buscaAdvNaLista(listaAdvogados, chave.advogadoId).toDict(enviaEscritorio=False)
+            else:
+                dictChave['advogadoId'] = None
+
+            contexto['chaves'].append(dictChave)
+        # print('\n\n')
+        #
+        # for chave in contexto['chaves']:
+        #     for c, v in chave.items():
+        #         if c == 'chaveId':
+        #             print(f"chaveId: {v} *****************************")
+        #         else:
+        #             print(f"{c}: {v}")
+        #     print('-------------------------\n\n')
+
         contexto['aCadastrar'] = len(listaAdvogados) != chavesAcesso.count()
 
     return render(request, 'gridAdvogados.html', contexto)

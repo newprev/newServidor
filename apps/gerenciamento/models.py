@@ -67,7 +67,7 @@ class ChaveAcesso(models.Model):
             'uuid': f"{self.uuid}",
             'escritorioId': self.escritorioId.toDict(),
             'planoId': self.planoId.toDict() if self.planoId is not None else None,
-            'advogadoId': self.advogadoId.toDict() if self.advogadoId is not None else None,
+            'advogadoId': self.advogadoId,
             'ativo': self.ativo,
             'dataUltAlt': f"{self.dataUltAlt}",
             'dataAquisicao': f"{self.dataAquisicao}",
