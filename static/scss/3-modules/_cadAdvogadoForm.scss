@@ -35,3 +35,28 @@
     }
 }
 
+.contato-form-list {
+    display: flex;
+    flex-direction: column;
+
+    .whatsapp-telegram {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .form-check.form-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 0rem;
+            width: 50%;
+
+            label {
+                font-weight: bold;
+            }
+        }
+    }
+
+}
+

@@ -7,15 +7,67 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from django.contrib import messages
+from django.contrib import messages, auth
 
-from apps.advogado.models import Advogado, EnderecoAdvogado
+from apps.advogado.models import Advogado, EnderecoAdvogado, Contato
 from apps.escritorio.models import Escritorio
 from apps.gerenciamento.models import ChaveAcesso
 from utils.enums.imgManipulacaoEnum import ImgManipulacao
 from utils.helpers import getEstadosDict, campoAlterado, buscaAdvNaLista
 from utils.imageManager import redimensionarImagem
 from utils.validators import validaTelefone, validaEmail
+
+
+def advogadosCadastrados(request):
+    contexto: dict = {
+        'dashboard': True,
+    }
+    try:
+        if not request.user.is_authenticated:
+            auth.logout(request)
+            redirect('login')
+
+        escritorio: Escritorio = request.user
+        listaAdvogados: List[dict] = []
+
+        if Advogado.objects.filter(escritorioId=escritorio).exists():
+            queryAdvogados = Advogado.objects.filter(escritorioId=escritorio)
+
+            for adv in queryAdvogados.all():
+                dictInfoPessoal: dict = adv.toDict(enviaEscritorio=False)
+                dictEndereco: dict = None
+                dictContato: dict = None
+
+                if EnderecoAdvogado.objects.filter(advogadoId=adv).exists():
+                    endereco = EnderecoAdvogado.objects.get(advogadoId=adv)
+                    dictEndereco = endereco.toDict(enviaAdvogado=False)
+
+                if Contato.objects.filter(advogadoId=adv).exists():
+                    contato = Contato.objects.get(advogadoId=adv)
+                    dictContato = contato.toDict(enviaAdvogado=False)
+
+                listaAdvogados.append({
+                    'pessoal': dictInfoPessoal,
+                    'endereco': dictEndereco,
+                    'contato': dictContato
+                })
+
+            for adv in listaAdvogados:
+                print(f"{adv['pessoal']['advogadoId']} **************************************** ")
+                for chave, valor in adv.items():
+                    print(f"{chave}: {valor}")
+                print('---------------------------------\n\n')
+
+        if len(listaAdvogados) <= 0:
+            contexto['listaAdvogados'] = None
+        else:
+            contexto['listaAdvogados'] = listaAdvogados
+
+        return render(request, 'advCadastrados.html', contexto)
+
+    except Exception as err:
+        print(f"advogadosCadastrados - err:{err=}")
+        return render(request, 'advCadastrados.html', {})
 
 
 def avaliaCadastroAdvogado(request):
@@ -37,6 +89,8 @@ def avaliaCadastroAdvogado(request):
             contextForm["numero"] = request.POST.get('numero')
             contextForm["complemento"] = request.POST.get('complemento')
             contextForm["senha"] = request.POST.get('password')
+            contextForm["is-whatsapp"] = request.POST.get('password')
+            contextForm["is-telegram"] = request.POST.get('password')
 
             request.session['requestFormAdv'] = request.POST
 
@@ -45,8 +99,12 @@ def avaliaCadastroAdvogado(request):
             sobrenome = request.POST.get('sobrenome')
             cpf = request.POST.get('cpf')
             oab = request.POST.get('oab')
-            telefone = validaTelefone(request.POST.get('celular'))
             email = validaEmail(request.POST.get('email'))
+
+            # Dados de contato
+            telefone = validaTelefone(request.POST.get('celular'))
+            isWhatsapp = bool(request.POST.get('is-whatsapp'))
+            isTelegram = bool(request.POST.get('is-telegram'))
 
             # Dados residenciais do advogado
             cep = request.POST.get('cep')
@@ -75,15 +133,7 @@ def avaliaCadastroAdvogado(request):
                 oab=oab,
                 email=email,
             )
-            advogado.save()
-
-            chaveAcesso: ChaveAcesso = ChaveAcesso.objects.filter(
-                escritorioId=escritorio,
-                advogadoId=None,
-            ).first()
-
-            chaveAcesso.advogadoId = advogado.advogadoId
-            chaveAcesso.dataUltAlt = datetime.datetime.now()
+            # advogado.save()
 
             if cep is not None and cep != '':
                 endereco: EnderecoAdvogado = EnderecoAdvogado.objects.create(
@@ -96,15 +146,15 @@ def avaliaCadastroAdvogado(request):
                     numero=numero,
                     complemento=complemento
                 )
-                endereco.save()
 
-            if advogado.advogadoId is None or chaveAcesso.advogadoId is None or chaveAcesso.escritorioId is None:
-                messages.error(request, 'Não foi possível finalizar o cadastro. Tente novamente.')
-                advogado.delete()
-                endereco.delete()
-                return redirect('cadastroAdvogado')
+            if telefone != '':
+                contato: Contato = Contato.objects.create(
+                    advogadoId=advogado,
+                    telefone=telefone,
+                    isWhatsapp=isWhatsapp,
+                    isTelegram=isTelegram
+                )
 
-            chaveAcesso.save()
             messages.success(request, "Advogado cadastrado com sucesso!")
             request.session['requestFormAdv'] = None
 
@@ -121,6 +171,15 @@ def avaliaCadastroAdvogado(request):
 
         except Exception as err:
             print(f"avaliaCadastroAdvogado - {err=}")
+            if advogado is not None:
+                advogado.delete()
+
+            if endereco is not None:
+                endereco.delete()
+
+            if contato is not None:
+                contato.delete()
+
             return redirect('cadastroAdvogado')
 
         return redirect('dashboard')
@@ -129,6 +188,8 @@ def avaliaCadastroAdvogado(request):
 
 
 def atualizaCadastro(request, **kwargs):
+    contexto: dict = {}
+
     if kwargs is None or len(kwargs.items()) == 0:
         messages.error(request, 'Não foi possível buscar as informações do advogado. Entre em contato com o suporte.')
         return redirect('dashboard')
@@ -138,16 +199,19 @@ def atualizaCadastro(request, **kwargs):
 
     try:
         advogado: Advogado = Advogado.objects.get(advogadoId=advogadoId)
+        contexto['advogado'] = advogado.toDict()
 
         endereco: EnderecoAdvogado = None
-        if EnderecoAdvogado.objects.filter(advogadoId=advogado.advogadoId).exists():
-            endereco = EnderecoAdvogado.objects.filter(advogadoId=advogado.advogadoId).get()
+        if EnderecoAdvogado.objects.filter(advogadoId=advogadoId).exists():
+            endereco = EnderecoAdvogado.objects.filter(advogadoId=advogadoId).get()
 
-        if endereco is not None:
-            contexto: dict = {'info': dict(advogado.toDict(), **endereco.toDict())}
-        else:
-            contexto: dict = {'info': advogado.toDict()}
+        contatoAdvogado: Contato = None
+        if Contato.objects.filter(advogadoId=advogado).exists():
+            contatoAdvogado = Contato.objects.get(advogadoId=advogado)
+            print('\n\nEntrou aqui!\n\n')
 
+        contexto['endereco'] = endereco.toDict() if endereco is not None else None
+        contexto['contato'] = contatoAdvogado.toDict(enviaAdvogado=False) if contatoAdvogado is not None else None
         contexto['cadastro'] = True
         contexto['dashboard'] = True
         contexto['atualizacao'] = True
@@ -156,6 +220,7 @@ def atualizaCadastro(request, **kwargs):
 
     except Exception as err:
         messages.error(request, err)
+        print(f"atualizaCadastro - err:{err=}")
         return redirect('dashboard')
 
     return render(request, 'atualizacaoAdv.html', context=contexto)
@@ -202,7 +267,7 @@ def buscaAdvogados(request):
         #             print(f"{c}: {v}")
         #     print('-------------------------\n\n')
 
-        contexto['aCadastrar'] = len(listaAdvogados) != chavesAcesso.count()
+        contexto['aCadastrar'] = chavesAcesso.count() > len(listaAdvogados)
 
     return render(request, 'gridAdvogados.html', contexto)
 
@@ -212,11 +277,11 @@ def cadastroAdvogado(request, **kwargs):
         redirect('login')
 
     if request.method == 'GET':
-        escritorio: Escritorio = request.user
-        qtdChavesLivres: int = ChaveAcesso.objects.filter(escritorioId=escritorio.escritorioId, advogadoId=None).count()
-        if qtdChavesLivres < 1:
-            headers = {"HX-Trigger": json.dumps({'semChaves': "Não há chaves disponíveis. Adquira mais em 'Gerenciar chaves'"})}
-            return HttpResponse(status=204, headers=headers)
+        # escritorio: Escritorio = request.user
+        # qtdChavesLivres: int = ChaveAcesso.objects.filter(escritorioId=escritorio.escritorioId, advogadoId=None).count()
+        # if qtdChavesLivres < 1:
+        #     headers = {"HX-Trigger": json.dumps({'semChaves': "Não há chaves disponíveis. Adquira mais em 'Gerenciar chaves'"})}
+        #     return HttpResponse(status=204, headers=headers)
 
         contexto: dict = {
             'cadastro': True,
@@ -261,13 +326,19 @@ def efetivaAtualizaCadastro(request):
         alterouEndereco: bool = False
         alterouDadoPessoal: bool = False
 
+
+        # Dados pessoais
         advogadoId = request.POST.get('advogadoId')
         primeiroNome = request.POST.get('primeiroNome')
         sobrenome = request.POST.get('sobrenome')
         cpf = request.POST.get('cpf')
         oab = request.POST.get('oab')
-        telefone = validaTelefone(request.POST.get('celular'))
         email = validaEmail(request.POST.get('email'))
+
+        # Dados de contato
+        telefone = validaTelefone(request.POST.get('celular'))
+        isWhatsapp = bool(request.POST.get('is-whatsapp'))
+        isTelegram = bool(request.POST.get('is-telegram'))
 
         # Dados residenciais do advogado
         cep = request.POST.get('cep')
@@ -280,6 +351,11 @@ def efetivaAtualizaCadastro(request):
         senha = request.POST.get('password')
 
         advogado: Advogado = Advogado.objects.get(advogadoId=advogadoId)
+
+        if Contato.objects.filter(advogadoId=advogado).exists():
+            contato: Contato = Contato.objects.get(advogadoId=advogado)
+        else:
+            contato = None
 
         if 'foto-advogado' in request.FILES:
             advogado.fotoPath = request.FILES['foto-advogado']
@@ -316,6 +392,21 @@ def efetivaAtualizaCadastro(request):
                 criarEndereco = True
             else:
                 enderecoAdv = enderecoAdv.get()
+
+        if contato is None or campoAlterado(contato.telefone, telefone) or campoAlterado(contato.isTelegram, isTelegram) or campoAlterado(contato.isWhatsapp, isWhatsapp):
+            if contato is None:
+                contato: Contato = Contato.objects.create(
+                    advogadoId=advogado,
+                    telefone=telefone,
+                    isWhatsapp=isWhatsapp,
+                    isTelegram=isTelegram
+                )
+            else:
+                contato.telefone = telefone
+                contato.isWhatsapp = isWhatsapp
+                contato.isTelegram = isTelegram
+                contato.dataUltAlt = datetime.datetime.now()
+                contato.save()
 
         if enviouEndereco:
             if criarEndereco:
@@ -374,6 +465,7 @@ def efetivaAtualizaCadastro(request):
         return redirect('dashboard')
     else:
         print('Tá fazendo merdaaaa..........: efetivaAtualizaCadastro')
+
 
 def excluiAdvogado(request, advogadoId: int):
     if not request.user.is_authenticated:

@@ -23,25 +23,16 @@
     });
 
     // Escritório adquiriu uma chave com sucesso
-    htmx.on('chaveAdicionada',(event) => {
+    htmx.on('chavesAdquiridas',(event) => {
         const modelToast = new bootstrap.Toast(toastSuccess);
         const btnVoltaDashboard = document.getElementById('volta-dashboard');
-
-        // if (btnVoltaDashboard) {
-        //     btnVoltaDashboard.click();
-        // }
-        // else {
-        //     console.log('***************');
-        //     console.log('Era para voltar para o dashboard após adicionar uma chave');
-        //     console.log('***************');
-        // }
 
         toastMessageSuccess.innerText = event.detail.value;
         modelToast.show();
     });
 
     // Ecritório tenta adquirir nova chave, mas há algum problema no cadastro
-    htmx.on('erroChave',(event) => {
+    htmx.on('erroAquisicao',(event) => {
         const modelToast = new bootstrap.Toast(toastWarning);
 
         console.log(event);

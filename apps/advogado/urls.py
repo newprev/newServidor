@@ -13,6 +13,7 @@ urlpatterns = [
     path('excluiAdvogado/<int:advogadoId>/', excluiAdvogado, name='excluiAdvogado'),
     path('desAtivaAdvogado/<int:advogadoId>/', desAtivaAdvogado, name='desAtivaAdvogado'),
     path('buscaAdvogados', buscaAdvogados, name='buscaAdvogados'),
+    path('advogadosCadastrados', advogadosCadastrados, name='advogadosCadastrados'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

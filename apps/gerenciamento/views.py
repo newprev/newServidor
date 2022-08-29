@@ -3,7 +3,7 @@ import json
 from time import sleep
 from typing import List, Generator
 
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.db.models import QuerySet
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.views.decorators.http import require_POST, require_GET
@@ -29,10 +29,13 @@ def atualizaCarrinho(request):
     }
 
     if request.method in ('GET', 'get', 'delete', 'DELETE'):
+        escritorio: Escritorio = request.user
         carrinhoChaves = []
         if 'carrinhoChaves' in request.session:
             carrinhoChaves = request.session['carrinhoChaves']
-            # request.session['carrinhoChaves'] = None
+
+        if 'listaAdvogados' not in contexto.keys():
+            contexto['listaAdvogados']: List[Advogado] = Advogado.objects.filter(escritorioId=escritorio.escritorioId, ativo=True, confirmado=True).all()
 
         contexto['carrinhoChaves'] = carrinhoChaves
 
@@ -83,9 +86,7 @@ def buscaMinhasChaves(request):
             escritorio: Escritorio = request.user
             chaves: QuerySet = ChaveAcesso.objects.filter(
                 escritorioId=escritorio.escritorioId,
-            ).order_by('ativo', 'dataAquisicao')
-
-            sleep(1)
+            ).order_by('advogadoId', 'ativo', 'dataAquisicao')
 
             listaChavesAdvogadosPlanos: List[dict] = []
 
@@ -115,17 +116,19 @@ def buscaMinhasChaves(request):
 
 def buscaMinhasUltimasAquisicoes(request):
     contexto: dict = {'dashboard': True}
+    temChaveSemAdvogado: bool = False
+    advogadosChavesId: List[int] = []
 
     try:
         if request.user.is_authenticated:
             escritorio: Escritorio = request.user
             chaves: QuerySet = ChaveAcesso.objects.filter(
                 escritorioId=escritorio.escritorioId,
-            ).order_by('ativo', 'dataAquisicao')
+            ).order_by('advogadoId', 'ativo', 'dataAquisicao')
 
             listaChavesAdvogadosPlanos: List[dict] = []
 
-            for chave in chaves.all()[:2]:
+            for chave in chaves.all()[:5]:
                 infoConjugada = chave.toDict()
 
                 plano: Planos = chave.planoId
@@ -134,19 +137,20 @@ def buscaMinhasUltimasAquisicoes(request):
                 if chave.advogadoId is not None:
                     advogado: Advogado = get_object_or_404(Advogado, advogadoId=chave.advogadoId)
                     infoConjugada['advogadoId'] = advogado.toDict()
+                    advogadosChavesId.append(advogado.advogadoId)
 
                 else:
+                    temChaveSemAdvogado = True
                     infoConjugada['advogadoId'] = None
 
                 listaChavesAdvogadosPlanos.append(infoConjugada)
 
-            for info in listaChavesAdvogadosPlanos:
-                print(f"{info['chaveId']} ***********************")
-                for chave, valor in info.items():
-                    print(f"{chave}: {valor}")
-                print('------------------')
+            if temChaveSemAdvogado:
+                listaAdvogados: QuerySet = Advogado.objects.filter(escritorioId=escritorio, ativo=True, confirmado=True).exclude(advogadoId__in=advogadosChavesId)
+                contexto['listaAdvogados'] = listaAdvogados.all()
 
             contexto['chaves'] = listaChavesAdvogadosPlanos
+
             return render(request, 'localHtmls/_cardUltimasAquisicoes.html', contexto)
 
         else:
@@ -183,6 +187,68 @@ def deletaChaveCarrinho(request, uuid: str):
     request.session['carrinhoChaves'] = carrinhoChaves
 
     return redirect('atualizaCarrinho')
+
+@require_POST
+def efetivaAssociacao(request):
+
+    if not request.user.is_authenticated:
+        auth.logout(request)
+        return redirect('login')
+
+    try:
+        escritorio: Escritorio = request.user
+        advogadoId: int = int(request.POST.get('advogadoSelecionado'))
+        advogado: Advogado = Advogado.objects.get(advogadoId=advogadoId, escritorioId=escritorio)
+        chaveId: int = int(request.POST.get('chaveId'))
+
+        if ChaveAcesso.objects.filter(advogadoId=advogadoId, escritorioId=escritorio).exists():
+            messages.warning(request, 'Advogado já está associado a um plano.')
+            return redirect('minhasChaves')
+
+        chave: ChaveAcesso = ChaveAcesso.objects.get(chaveId=chaveId)
+        chave.advogadoId = advogadoId
+        chave.dataUltAlt = datetime.datetime.now()
+        chave.save()
+
+        messages.success(request, f"Advogado {advogado.primeiroNome} {advogado.sobrenome} associado ao plano {chave.planoId.titulo} com sucesso.")
+        return redirect('minhasChaves')
+
+    except Exception as err:
+        print(f"efetivaAssociacao - {err=}")
+        messages.warning(request, '')
+        return redirect('minhasChaves')
+
+@require_POST
+def efetivaCompraPlanos(request):
+    carrinho = request.session['carrinhoChaves']
+    headers: dict = {}
+
+    try:
+        for chave in carrinho:
+            advogadoId = request.POST.get(chave['uuid'])
+            chave['advogadoId'] = advogadoId if advogadoId != '' else None
+
+            novaChave: ChaveAcesso = ChaveAcesso().fromDict(chave)
+            novaChave.save()
+
+        headers['HX-Trigger'] = json.dumps({
+            'chavesAdquiridas': f"{len(carrinho) if carrinho is not None else 0} chaves adquiridas com sucesso"
+        })
+
+        request.session['carrinhoChaves'] = None
+        request.session['qtdPlanosAdquiridos'] = 0
+        messages.success(request, f"{len(carrinho) if carrinho is not None else 0} chaves adquiridas com sucesso")
+        return redirect('dashboard')
+
+        # return HttpResponse(status=200, headers=headers)
+
+    except Exception as err:
+        print(f"efetivaCompraPlanos - err:{err=}")
+        # headers['HX-Trigger'] = json.dumps({
+        #     'erroAquisicao': f"Não foi possível adicionar as chaves ao seu cadastro"
+        # })
+        messages.error(request, f"Não foi possível adicionar as chaves ao seu cadastro")
+        return redirect('minhasChaves')
 
 
 def minhasChaves(request):

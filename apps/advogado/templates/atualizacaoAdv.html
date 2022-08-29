@@ -13,9 +13,9 @@
                 <h1 class="titulo-padrao">Cadastro do advogado</h1>
             
                 <label class="img-usuario" for="foto-advogado">
-                    {% if info.fotoPath is not None and info.fotoPath != '' %}
+                    {% if advogado.fotoPath is not None and advogado.fotoPath != '' %}
                     Atualizar arquivo
-                    <img src="../..{{ info.fotoPath.url }}" alt="Foto usuario">
+                    <img src="../..{{ advogado.fotoPath.url }}" alt="Foto usuario">
                     {% else %}
                     Enviar arquivo
                     <img src="{% static 'images/user.png' %}" alt="Foto usuario">
@@ -31,13 +31,12 @@
                             <i class="fa-solid fa-pencil"></i>
                         </div>
                         <div class="form-list">
-                            <input id="advogadoId" class="form-campo" value="{{ info.advogadoId.advogadoId }}" type="number" name="advogadoId" hidden>
-                            <input id="primeiroNome" class="form-campo" value="{{ info.primeiroNome }}" name="primeiroNome" placeholder="Primeiro nome" title="Primeiro nome" autofocus required>
-                            <input id="sobrenome" class="form-campo" value="{{ info.sobrenome }}" name="sobrenome" placeholder="Sobrenome" title="Sobrenome" required>
-                            <input id="cpf" class="form-campo" value="{{ info.cpf }}" name="cpf" placeholder="CPF" type="number" title="CPF do advogado" required>
-                            <input id="oab" class="form-campo" value="{{ info.oab }}" name="oab" placeholder="Nº OAB" title="OAB do advogado" required>
-                            <input id="celular" class="form-campo" value="{{ info.celular }}" name="celular" placeholder="Contato - Celular" title="Celular/whatsapp contendo apenas números" required>
-                            <input id="email" class="form-campo" value="{{ info.email }}" name="email" placeholder="E-mail do advogado" title="E-mail que você receberá notificações" required>
+                            <input id="advogadoId" class="form-campo" value="{{ advogado.advogadoId }}" type="number" name="advogadoId" hidden>
+                            <input id="primeiroNome" class="form-campo" value="{{ advogado.primeiroNome }}" name="primeiroNome" placeholder="Primeiro nome" title="Primeiro nome" autofocus required>
+                            <input id="sobrenome" class="form-campo" value="{{ advogado.sobrenome }}" name="sobrenome" placeholder="Sobrenome" title="Sobrenome" required>
+                            <input id="cpf" class="form-campo" value="{{ advogado.cpf }}" name="cpf" placeholder="CPF" type="number" title="CPF do advogado" required>
+                            <input id="oab" class="form-campo" value="{{ advogado.oab }}" name="oab" placeholder="Nº OAB" title="OAB do advogado" required>
+                            <input id="email" class="form-campo" value="{{ advogado.email }}" name="email" placeholder="E-mail do advogado" title="E-mail que você receberá notificações" required>
                         </div>
                         <div class="vertical-spacer"></div>
                         <div class="vertical-spacer"></div>
@@ -51,24 +50,56 @@
                     </div>
 
                     <!-- Coluna com as informações do endereço do advogado -->
-                    <div class="form-info-endereco">
+                    <div class="form-endereco-contato">
+
+                        <!-- Endereço -->
                         <div class="info-dados">
                             <h3 class="titulo-padrao">Endereço do advogado</h3>
                             <i class="fa-solid fa-pencil"></i>
                         </div>
                         <div class="form-list">
-                            <input id="cep" class="form-campo" value="{{ info.cep }}" name="cep" placeholder="CEP" title="CEP do advogado" type="number">
+                            <input id="cep" class="form-campo" value="{{ endereco.cep }}" name="cep" placeholder="CEP" title="CEP do advogado" type="number">
                             <div class="cidade-estado">
-                                <input id="cidade" class="form-campo" value="{{ info.cidade }}" name="cidade" placeholder="Cidade" title="Cidade de domicílio do advogado">
+                                <input id="cidade" class="form-campo" value="{{ endereco.cidade }}" name="cidade" placeholder="Cidade" title="Cidade de domicílio do advogado">
                                 {% include 'partials/estados.html' %}
                             </div>
-                            <input id="bairro" class="form-campo" value="{{ info.bairro }}" name="bairro" placeholder="Bairro" title="Bairro de domicílio do advogado">
-                            <input id="endereco" class="form-campo" value="{{ info.endereco }}" name="endereco" placeholder="Endereço" title="Logradouro de domicílio do advogado">
+                            <input id="bairro" class="form-campo" value="{{ endereco.bairro }}" name="bairro" placeholder="Bairro" title="Bairro de domicílio do advogado">
+                            <input id="endereco" class="form-campo" value="{{ endereco.endereco }}" name="endereco" placeholder="Endereço" title="Logradouro de domicílio do advogado">
                             <div class="num-complemento">
-                                <input id="numero" class="form-campo" value="{{ info.numero }}" name="numero" placeholder="Nº do imóvel" type="number" title="Nº do imóvel de domicílio do advogado">
-                                <input id="complemento" class="form-campo" value="{{ info.complemento }}" name="complemento" placeholder="Complemento" title="Complemento do logradouro de domicílio do advogado">
+                                <input id="numero" class="form-campo" value="{{ endereco.numero }}" name="numero" placeholder="Nº do imóvel" type="number" title="Nº do imóvel de domicílio do advogado">
+                                <input id="complemento" class="form-campo" value="{{ endereco.complemento }}" name="complemento" placeholder="Complemento" title="Complemento do logradouro de domicílio do advogado">
                             </div>
                         </div>
+
+                        <!-- Contato -->
+                        <div class="vertical-spacer"></div>
+                        <div class="vertical-spacer"></div>
+                        <div class="info-dados">
+                            <h3 class="titulo-padrao">Contato</h3>
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                        <div class="contato-form-list">
+                            <input id="celular" class="form-campo" value="{{ contato.telefone }}" name="celular" placeholder="Contato - Celular" title="Celular/whatsapp contendo apenas números" required>
+                            <div class="whatsapp-telegram">
+                                <div class="form-check form-switch">
+                                    {% if contato.isWhatsapp %}
+                                        <input name="is-whatsapp" class="form-check-input" type="checkbox" role="switch" id="cb-is-whatsapp" checked>
+                                    {% else %}
+                                    <input name="is-whatsapp" class="form-check-input" type="checkbox" role="switch" id="cb-is-whatsapp">
+                                    {% endif %}
+                                    <label class="form-check-label" for="cb-is-whatsapp">Whatsapp</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    {% if contato.isTelegram %}
+                                        <input name="is-telegram" class="form-check-input" type="checkbox" role="switch" id="cb-is-telegram" checked>
+                                    {% else %}
+                                    <input name="is-telegram" class="form-check-input" type="checkbox" role="switch" id="cb-is-telegram">
+                                    {% endif %}
+                                    <label class="form-check-label" for="cb-is-telegram">Telegram</label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

@@ -15,6 +15,8 @@ urlpatterns = [
     path('buscaMinhasUltimasAquisicoes/', buscaMinhasUltimasAquisicoes, name='buscaMinhasUltimasAquisicoes'),
     path('atualizaCarrinho/', atualizaCarrinho, name="atualizaCarrinho"),
     path('deletaChaveCarrinho/<str:uuid>/', deletaChaveCarrinho, name='deletaChaveCarrinho'),
+    path('efetivaCompraPlanos/', efetivaCompraPlanos, name='efetivaCompraPlanos'),
+    path('efetivaAssociacao', efetivaAssociacao, name='efetivaAssociacao')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

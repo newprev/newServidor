@@ -13,22 +13,25 @@
 
     .cabecalho-saudacao {
         margin: 1rem 0 2rem 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 100%;
 
         .titulo-saudacao {
             @extend %titulo-padrao;
             font-size: 2.5rem;
         }
+    }
 
-        .separador-firula {
-            border: 1px solid rgba($color: blackColor(600), $alpha: 0.4);
-            border-radius: 1px;
-            width: 90%;
-            margin-top: 1rem;
-        }
+    .subtitulo-saudacao {
+        align-self: self-start;
+
+    }
+
+    .separador-firula {
+        border: 1px solid primaryColor();
+        border-radius: 1px;
+        width: 40%;
+        margin-bottom: 2rem;
+        align-self: self-start;
     }
 
     &-principal {
@@ -62,6 +65,23 @@
 
                         .card-text {
                             padding-right: .5rem;
+                        }
+                    }
+
+                    .combo-associa-advogado {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        
+                        select {
+                            margin-right: 1rem;
+                            width: fit-content;
+                        }
+
+                        button {
+                            @extend %btn-principal-P;
+                            font-size: 0.8rem;
+                            height: 2rem;
                         }
                     }
                 }

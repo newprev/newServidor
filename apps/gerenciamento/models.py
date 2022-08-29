@@ -73,5 +73,19 @@ class ChaveAcesso(models.Model):
             'dataAquisicao': f"{self.dataAquisicao}",
         }
 
+    def fromDict(self, dictChave: dict, is_ativo: bool = True):
+        escritorioId = dictChave['escritorioId'] if isinstance(dictChave['escritorioId'], int) else dictChave['escritorioId']['escritorioId']
+        planoId = dictChave['planoId'] if isinstance(dictChave['planoId'], int) else dictChave['planoId']['planoId']
+
+        self.uuid = dictChave['uuid']
+        self.escritorioId = Escritorio.objects.get(escritorioId=escritorioId)
+        self.planoId = Planos.objects.get(planoId=planoId)
+        self.advogadoId = dictChave['advogadoId']
+        self.ativo = is_ativo
+        self.dataUltAlt = dictChave['dataUltAlt']
+        self.dataAquisicao = dictChave['dataAquisicao']
+
+        return self
+
     class Meta:
         db_table = "ChaveAcesso"

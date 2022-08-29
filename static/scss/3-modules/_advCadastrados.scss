@@ -1,0 +1,62 @@
+@import '../1-base/btnDesign';
+@import '../1-base/colorSystem';
+@import '../1-base/labelDesign';
+
+.advogados-cadastrados-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+
+    .advogados-cadastrados-cabecalho {
+        display: flex;
+        justify-content: space-between;
+
+        width: 100%;
+
+        h3 {
+            @extend %titulo-padrao;
+            font-size: 2.5rem;
+        }
+    }
+
+    .offcanvas.offcanvas-end {
+        .info-botao-fechar {
+            margin: 1rem;
+            display: flex;
+            justify-content: space-between;
+    
+            h6 {
+                @extend %saudacoes-padrao;
+                font-weight: bold;
+            }
+        }
+
+        .offcanvas-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        
+            img {
+                border-radius: 16px;
+            }
+
+            h5 {
+                @extend %titulo-padrao;
+                margin-top: .5rem;
+            }
+        }
+    }
+}
+
+.fa-brands.fa-whatsapp {
+    font-size: 2rem;
+    margin: 1rem;
+    color: successColor();
+}
+
+.fa-brands.fa-telegram {
+    font-size: 2rem;
+    margin: 1rem;
+    color: primaryColor();
+}

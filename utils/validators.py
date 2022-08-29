@@ -50,8 +50,8 @@ def validaSenha(senha: str):
         raise ValidationError("Senha não contém caracteres necessários")
 
 
-def validaTelefone(telefone: str):
-    if telefone is None or (isinstance(telefone, int) and len(str(telefone)) != 11):
+def validaTelefone(telefone: str) -> str:
+    if telefone is None or (isinstance(telefone, int) and len(str(telefone)) > 13):
         raise ValidationError(NewValidationError.telefoneInvalido.value)
 
     if not telefone.isnumeric():

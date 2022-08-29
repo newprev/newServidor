@@ -71,7 +71,7 @@ class TrocaSenha(models.Model):
 
 class EnderecoAdvogado(models.Model):
     enderecoId = models.AutoField(name='enderecoId', primary_key=True, auto_created=True)
-    advogadoId = models.ForeignKey(Advogado, on_delete=models.CASCADE)
+    advogadoId = models.ForeignKey(Advogado, on_delete=models.CASCADE, name='advogadoId')
     endereco = models.CharField(name='endereco', blank=False, null=False, max_length=60)
     cidade = models.CharField(name='cidade', blank=False, null=False, max_length=60)
     estado = models.CharField(name='estado', blank=False, null=False, max_length=60)
@@ -85,10 +85,10 @@ class EnderecoAdvogado(models.Model):
     class Meta:
         db_table = "EnderecoAdvogado"
 
-    def toDict(self):
+    def toDict(self, enviaAdvogado: bool = True):
         return {
             "enderecoId": self.enderecoId,
-            "advogadoId": self.advogadoId,
+            "advogadoId": self.advogadoId.toDict() if enviaAdvogado else self.advogadoId.advogadoId,
             "endereco": self.endereco,
             "cidade": self.cidade,
             "estado": self.estado,
@@ -102,9 +102,9 @@ class EnderecoAdvogado(models.Model):
 
 
 class Contato(models.Model):
-    Id = models.AutoField(name='Id', primary_key=True, auto_created=True)
-    contatoId = models.IntegerField(name='contatoId', null=False, blank=False)
-    telefone = models.IntegerField(name='telefone', null=True, blank=True)
+    contatoId = models.AutoField(name='contatoId', primary_key=True, auto_created=True)
+    advogadoId = models.ForeignKey(Advogado, on_delete=models.CASCADE, name='advogadoId')
+    telefone = models.CharField(name='telefone', null=True, blank=True, max_length=13)
     isWhatsapp = models.BooleanField(name='isWhatsapp', default=True)
     isTelegram = models.BooleanField(name='isTelegram', default=True)
     ativo = models.BooleanField(name='ativo', default=True)
@@ -113,3 +113,15 @@ class Contato(models.Model):
 
     class Meta:
         db_table = "Contato"
+
+    def toDict(self, enviaAdvogado: bool = True) -> dict:
+        return {
+            'contatoId': self.contatoId,
+            'advogadoId': self.advogadoId.toDict() if enviaAdvogado else self.advogadoId.advogadoId,
+            'telefone': self.telefone,
+            'isWhatsapp': self.isWhatsapp,
+            'isTelegram': self.isTelegram,
+            'ativo': self.ativo,
+            'dataUltAlt': self.dataUltAlt,
+            'dataCadastro': self.dataCadastro,
+        }

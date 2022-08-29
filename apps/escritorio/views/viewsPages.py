@@ -157,6 +157,7 @@ def cadastro(request):
 
     return render(request, 'cadastro.html', contexto)
 
+
 def dashboard(request):
     contexto: dict = {
         'dashboard': True,
@@ -184,9 +185,11 @@ def dashboard(request):
     else:
         return HttpResponse(Http404)
 
+
 def esqSenha(request):
     print('\n\n*******Clicou no esqueci senha*******\n\n')
     return login(request)
+
 
 def fazerLogin(request):
     if request.method == 'POST':
@@ -209,6 +212,7 @@ def fazerLogin(request):
         except Exception as err:
             error(f'fazerLogin - err: {err}')
 
+
 def fazerLogout(request):
     auth.logout(request)
 
@@ -216,11 +220,13 @@ def fazerLogout(request):
 
     return render(request, 'login.html', context=contexto)
 
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
 
     return redirect('login')
+
 
 def login(request, *args, **kwargs):
     if request.method == 'POST':

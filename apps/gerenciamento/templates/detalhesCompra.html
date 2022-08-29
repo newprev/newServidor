@@ -17,7 +17,8 @@
     </div>
 
 </div>
-<div class="aquisicoes-lista">
+<form id="aquisicoes-lista" action="{% url 'efetivaCompraPlanos' %}" class="aquisicoes-lista" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
     {% for chave in carrinhoChaves %}
 
     <div class="card">
@@ -28,9 +29,20 @@
             <div class="vertical-spacer-p"></div>
             <p class="card-text">Valor do plano: R$ {{ chave.planoId.valor }}</p>
             <p class="card-text">Data validade: {{ chave.planoId.validade }}</p>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+            {% if listaAdvogados is not None %}
+
+            <select name="{{ chave.uuid }}" class="form-select" aria-label="Default select example">
+                <option value="" selected>Associar advogado</option>
+                {% for advogado in listaAdvogados %}
+                <option value="{{ advogado.advogadoId }}">{{ advogado.primeiroNome }} {{ advogado.sobrenome }}</option>
+                {% endfor %}
+            </select>
+            
+            {% endif %}
         </div>
     </div>
 
     {% endfor %}
-</div>
+    <button type="submit">Teste</button>
+</form>
