@@ -3,9 +3,9 @@ PASSWORD=senha
 
 ##Iniciar o servidor
 run-dev:
-	@python manage.py runserver
+	@python3.8 manage.py runserver
 run-aws:
-	@python manage.py runserver 0:8080
+	@python3.8 manage.py runserver 0:8080
 access-aws:
 	@cd ../Documentos && ssh -i "NewPrevDev.pem" ubuntu@ec2-3-139-65-128.us-east-2.compute.amazonaws.com
 
@@ -14,8 +14,7 @@ access-aws:
 clearAllMigrations: ## Exclui todos os arquivos de migração gerados pelo sistema
 	@echo 'Limpando as migrações'
 	@rm -f apps/advogado/migrations/*.py && echo "---> apps/advogado/migrations"
-	@rm -f apps/escritorio/migrations/*.py && echo "---> apps/escritorio/migrations"
-	@rm -f apps/gerenciamento/migrations/*.py && echo "---> apps/gerenciamento/migrations"
+	@rm -f apps/escritorios/migrations/*.py && echo "---> apps/escritorios/migrations"
 	@rm -f apps/ferramentas/migrations/*.py && echo "---> apps/ferramentas/migrations"
 	@rm -f apps/informacoes/migrations/*.py && echo "---> apps/informacoes/migrations"
 	@rm -f apps/sincron/migrations/*.py && echo "---> apps/sincron/migrations"
@@ -30,15 +29,13 @@ deletaRecriaAtualiza: recriaBanco clearAllMigrations makeAllMigrations updateDB-
 ## @ Migracoes
 makeAllMigrations: ## Cria todos os arquivos de migração e completa a migração
 	@echo 'Makemigrations'
-	@python manage.py makemigrations advogado
-	@python manage.py makemigrations escritorio
-	@python manage.py makemigrations ferramentas
-	@python manage.py makemigrations informacoes
-	@python manage.py makemigrations sincron
-	@python manage.py makemigrations newMails
-	@python manage.py makemigrations gerenciamento
-	@python manage.py migrate
-	@make run-dev
+	@python3.8 manage.py makemigrations advogado
+	@python3.8 manage.py makemigrations escritorios
+	@python3.8 manage.py makemigrations ferramentas
+	@python3.8 manage.py makemigrations informacoes
+	@python3.8 manage.py makemigrations sincron
+	@python3.8 manage.py makemigrations newMails
+	@python3.8 manage.py migrate
 
 
 ## @ Banco de dados
