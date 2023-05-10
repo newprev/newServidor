@@ -32,7 +32,6 @@ class NewLogging:
 
         basicConfig(
             level=DEBUG,
-            encoding='utf-8',
             handlers=[self.apiLog],
         )
 

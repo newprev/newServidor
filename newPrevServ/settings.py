@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'newPrevServ.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = getDatabase(TipoConexao.hearthstone)
+DATABASES = getDatabase(TipoConexao.magic)
 
 
 # Password validation
