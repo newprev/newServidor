@@ -1,0 +1,9 @@
+{
+  "emailHost": "smtppro.zoho.com",
+  "port": 465,
+  "emailHostUser": "thomas.anderson@newprev.dev.br",
+  "emailHostPassword": "__00Neo00__",
+  "serverEmail": "israel.alves@newprev.dev.br",
+  "emailUseTls": false,
+  "emailUseSsl": true
+}

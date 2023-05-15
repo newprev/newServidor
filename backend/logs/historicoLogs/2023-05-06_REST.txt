@@ -1,0 +1,12 @@
+[2023-05-06 23:55:11,571] l:24  INFO --> GET::api/advogados
+[2023-05-06 23:55:11,575] l:12  INFO --> GET::api/escritorio/
+[2023-05-06 23:55:11,577] l:11  INFO --> GET::/convMon
+[2023-05-06 23:55:11,578] l:21  INFO --> GET::/tetosPrev
+[2023-05-06 23:55:11,579] l:32  INFO --> GET::/carenciasLei91
+[2023-05-06 23:55:11,586] l:11  INFO --> GET::/indicadores
+[2023-05-06 23:55:11,586] l:21  INFO --> GET::/expSobrevida
+[2023-05-06 23:55:11,587] l:31  INFO --> GET::/indiceAtuMonetaria
+[2023-05-06 23:55:11,588] l:41  INFO --> GET::/salarioMinimo
+[2023-05-06 23:55:11,589] l:51  INFO --> GET::/ipcaMensal
+[2023-05-06 23:55:11,590] l:61  INFO --> GET::/tipoBeneficio
+[2023-05-06 23:55:11,591] l:71  INFO --> GET::/especieBeneficio

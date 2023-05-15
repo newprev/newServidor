@@ -1,0 +1,10 @@
+{
+  "default": {
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": "GIDEON",
+    "USER": "NEWPREV",
+    "PASSWORD": "_NewPrev2021_",
+    "HOST": "localhost",
+    "PORT": "3306"
+  }
+}
