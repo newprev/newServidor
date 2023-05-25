@@ -89,7 +89,7 @@ class ListaAdvogadosByEscritorio(generics.ListAPIView):
     """Exibindo os(as) advogados(as) de determinado escritório"""
 
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
-    ordering_fields = ['login']
+    # ordering_fields = ['login']
     filterset_fields = ['confirmado', 'ativo']
 
     def get_queryset(self):

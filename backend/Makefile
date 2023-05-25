@@ -33,6 +33,7 @@ makeAllMigrations: ## Cria todos os arquivos de migração e completa a migraç�
 	@python3.8 manage.py makemigrations advogado
 	@python3.8 manage.py makemigrations ferramentas
 	@python3.8 manage.py makemigrations informacoes
+	@python3.8 manage.py makemigrations gerenciamento
 	@python3.8 manage.py makemigrations sincron
 	@python3.8 manage.py makemigrations newMails
 	@python3.8 manage.py migrate

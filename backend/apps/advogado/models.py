@@ -11,7 +11,7 @@ class Advogado(models.Model):
     sobrenome = models.CharField(max_length=40, null=False, blank=False)
     email = models.EmailField(max_length=40, null=False, blank=False, unique=True)
     senha = models.CharField(max_length=30, null=False, blank=False)
-    oab = models.CharField(max_length=9, null=False, blank=False, unique=True)
+    numeroOAB = models.CharField(max_length=9, null=False, blank=False, unique=True)
     cpf = models.CharField(max_length=11, null=False, blank=False, unique=True)
     nacionalidade = models.CharField(max_length=40, default='brasileiro', null=False, blank=False)
     estadoCivil = models.CharField(max_length=20, default='solteiro', null=False, blank=False)
@@ -36,7 +36,7 @@ class Advogado(models.Model):
             "sobrenome": self.sobrenome,
             "email": self.email,
             "senha": self.senha,
-            "oab": self.oab,
+            "numeroOAB": self.numeroOAB,
             "cpf": self.cpf,
             "nacionalidade": self.nacionalidade,
             "estadoCivil": self.estadoCivil,

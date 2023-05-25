@@ -80,6 +80,14 @@ def getEstadosDict() -> List:
     ]
 
 
+def getTipoAuth() -> List:
+    return [
+        ('E', 'Escritorio'),
+        ('A', 'Advogado'),
+        ('S', 'Super')
+    ]
+
+
 def campoAlterado(campoOriginal, campoAlterado) -> bool:
     if campoAlterado is None or campoAlterado == '':
         return False
