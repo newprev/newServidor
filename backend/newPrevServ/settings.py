@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'apps.newMails',
     'apps.sincron',
     'apps.gerenciamento',
+    'apps.newAuth'
 
     # Django REST framework
     'django_filters',
