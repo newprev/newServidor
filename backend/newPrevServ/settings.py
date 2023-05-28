@@ -40,6 +40,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Adicionar os mesmos IPs que em ALLOWED_HOSTS, mas com a porta específica
+CORS_ALLOWED_ORIGINS = []
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -82,7 +88,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'newPrevServ.urls'
