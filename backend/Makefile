@@ -29,14 +29,14 @@ deletaRecriaAtualiza: recriaBanco clearAllMigrations makeAllMigrations updateDB-
 ## @ Migracoes
 makeAllMigrations: ## Cria todos os arquivos de migração e completa a migração
 	@echo 'Makemigrations'
-	@python3.8 manage.py makemigrations escritorio
-	@python3.8 manage.py makemigrations advogado
-	@python3.8 manage.py makemigrations ferramentas
-	@python3.8 manage.py makemigrations informacoes
-	@python3.8 manage.py makemigrations gerenciamento
-	@python3.8 manage.py makemigrations sincron
-	@python3.8 manage.py makemigrations newMails
-	@python3.8 manage.py migrate
+	@python manage.py makemigrations escritorio
+	@python manage.py makemigrations advogado
+	@python manage.py makemigrations ferramentas
+	@python manage.py makemigrations informacoes
+	@python manage.py makemigrations gerenciamento
+	@python manage.py makemigrations sincron
+	@python manage.py makemigrations newMails
+	@python manage.py migrate
 
 
 ## @ Banco de dados

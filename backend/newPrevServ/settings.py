@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
 
     # Meus apps
     'apps.advogado',
@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'apps.newMails',
     'apps.sincron',
     'apps.gerenciamento',
-    'apps.newAuth'
+    # 'apps.newAuth',
 
     # Django REST framework
     'django_filters',
