@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+
+    <section class="advogados-cadastrados-container">
+
+        <!-- Cabeçalho com busca -->
+        <div class="advogados-cadastrados-cabecalho">
+            <h3>Clientes</h3>
+            <form role="search">
+                <input class="form-control" type="search" placeholder="Buscar advogado" aria-label="Search">
+              </form>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Ativo</th>
+                    <th scope="col">Confirmado</th>
+                </tr>
+            </thead>
+        {% if listaAdvogados is None %}
+            <tbody>
+                <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% else %}
+            {% for advogado in listaAdvogados %}
+            <tbody>
+                <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td><a data-bs-toggle="offcanvas" href="#index{{ advogado.pessoal.advogadoId }}" role="button" aria-controls="{{ advogado.pessoal.advogadoId }}">{{ advogado.pessoal.primeiroNome }} {{ advogado.pessoal.sobrenome }}</a></td>
+                    
+                    {% if advogado.pessoal.email is not None %}
+                    <td>{{ advogado.pessoal.email }}</td>
+                    {% else %}
+                    <td>--</td>
+                    {% endif %}
+                    
+                    {% if advogado.contato.telefone is not None %}
+                    <td>{{ advogado.contato.telefone }}</td>
+                    {% else %}
+                    <td>--</td>
+                    {% endif %}
+
+                    {% if advogado.pessoal.ativo %}
+                    <td><span class="badge text-bg-primary">Ativo</span></td>
+                    {% else %}
+                    <td><span class="badge text-bg-warning">Inativo</span></td>
+                    {% endif %}
+
+                    {% if advogado.pessoal.confirmado %}
+                    <td><span class="badge text-bg-primary">Confirmado</span></td>
+                    {% else %}
+                    <td><span class="badge text-bg-warning">Não confirmado</span></td>
+                    {% endif %}
+
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+        <!-- Offcanvas -->
+        {% for advogado in listaAdvogados %}
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="index{{ advogado.pessoal.advogadoId }}" aria-labelledby="{{ advogado.pessoal.advogadoId }}Label">
+            <div class="info-botao-fechar">
+                <h6>Perfil</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            
+            <!-- Foto central junto com o nome do advogado -->
+            <div class="offcanvas-header">            
+                {% if advogado.pessoal.fotoPath is not None and advogado.pessoal.fotoPath != '' %}
+                <img src="media/{{ advogado.pessoal.fotoPath }}" alt="Foto usuario">
+                {% else %}
+                <img src="{% static 'images/user.png' %}" alt="Foto usuario">
+                {% endif %}
+                <h5 class="offcanvas-title" id="{{ advogado.pessoal.advogadoId }}Label">{{ advogado.pessoal.primeiroNome }} {{ advogado.pessoal.sobrenome }}</h5>
+            </div>
+
+            <!-- Corpo do 'modal' -->
+            <div class="offcanvas-body">
+                <h6>
+                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                </h6>
+
+                <div class="accordion" id="accordion{{ advogado.pessoal.advogadoId }}">
+
+                    <!-- Atividades relacionadas ao sistema -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAtividades">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAtividades" aria-expanded="false" aria-controls="collapseAtividades">
+                                Atividades
+                            </button>
+                        </h2>
+                        <div id="collapseAtividades" class="accordion-collapse collapse" aria-labelledby="headingAtividades" data-bs-parent="#accordion{{ advogado.pessoal.advogadoId }}">
+                            <div class="accordion-body">
+                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informações pessoais como cpf, rg, oab... -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingPessoal">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePessoal" aria-expanded="true" aria-controls="collapsePessoal">
+                                Pessoal
+                            </button>
+                        </h2>
+                        <div id="collapsePessoal" class="accordion-collapse collapse show" aria-labelledby="headingPessoal" data-bs-parent="#accordion{{ advogado.pessoal.advogadoId }}">
+                            <div class="accordion-body">
+                                <h6>E-mail: <strong>{{ advogado.pessoal.email }}</strong></h6>
+                                <h6>OAB: <strong>{{ advogado.pessoal.oab }}</strong></h6>
+                                <h6>CPF: <strong>{{ advogado.pessoal.cpf }}</strong></h6>
+                                <h6>Nacionalidade: <strong>{{ advogado.pessoal.nacionalidade }}</strong></h6>
+                                <h6>Estado civil: <strong>{{ advogado.pessoal.estadoCivil }}</strong></h6>
+
+
+                                <!-- Ativo -->
+                                {% if advogado.pessoal.ativo %}
+                                <h6>Ativo: <span class="badge text-bg-primary">Ativo</span></h6>
+                                {% else %}
+                                <h6>Ativo: <span class="badge text-bg-warning">Inativo</span></h6>
+                                {% endif %}
+
+                                <!-- Confirmado -->
+                                {% if advogado.pessoal.confirmado %}
+                                <h6>Confirmado: <span class="badge text-bg-primary">Confirmado</span></h6>
+                                {% else %}
+                                <h6>Confirmado: <span class="badge text-bg-warning">Não confirmado</span></h6>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Informações de contato como email, whatsapp, telegram, etc... -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingContato">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContato" aria-expanded="false" aria-controls="collapseContato">
+                                Contato
+                            </button>
+                        </h2>
+                        <div id="collapseContato" class="accordion-collapse collapse" aria-labelledby="headingContato" data-bs-parent="#accordion{{ advogado.pessoal.advogadoId }}">
+                            <div class="accordion-body">
+                                <h6>Telefone/Celular: <strong>{{ advogado.contato.telefone }}</strong></h6>
+
+                                {% if advogado.contato.isWhatsapp %}
+                                <i class="fa-brands fa-whatsapp"></i>
+                                {% endif %}
+
+                                {% if advogado.contato.isTelegram %}
+                                <i class="fa-brands fa-telegram"></i>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Endereço do advogado -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingResidencial">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResidencial" aria-expanded="false" aria-controls="collapseResidencial">
+                                Residenciais
+                            </button>
+                        </h2>
+                        <div id="collapseResidencial" class="accordion-collapse collapse" aria-labelledby="headingResidencial" data-bs-parent="#accordion{{ advogado.pessoal.advogadoId }}">
+                            <div class="accordion-body">
+                                <h6>Endereço: <strong>{{ advogado.endereco.endereco }}</strong></h6>
+                                <h6>Cidade: <strong>{{ advogado.endereco.cidade }}</strong></h6>
+                                <h6>Estado: <strong>{{ advogado.endereco.estado }}</strong></h6>
+                                <h6>Bairro: <strong>{{ advogado.endereco.bairro }}</strong></h6>
+                                <h6>CEP: <strong>{{ advogado.endereco.cep }}</strong></h6>
+                                <h6>Número: <strong>{{ advogado.endereco.numero }}</strong></h6>
+                                <h6>Complemento: <strong>{{ advogado.endereco.complemento }}</strong></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    </section>
+
+    <!-- <script type="text/javascript" src={% static "js/cadastroAdv.js" %}></script> -->
+
+    {% endblock %}

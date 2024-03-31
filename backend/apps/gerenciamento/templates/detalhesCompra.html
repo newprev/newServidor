@@ -1,0 +1,48 @@
+<div class="aquisicoes-cabecalho">
+    <h2>Detalhes da compra</h2>
+    <div class="vertical-spacer-p"></div>
+    <div class="aquisicoes-cabecalho-detalhes">
+
+        <!-- Valor total da soma dos planos adquiridos -->
+        <div class="valor-total">
+            <h5 class="total-info">Valor da compra</h5>
+            <h4 class="valor-total">R$ {{ valorTotal }}</h4>
+        </div>
+
+        <!-- Quantidade de planos adquiridos -->
+        <div class="qtd-planos">
+            <h5 class="qtd-planos-info">Planos adquiridos</h5>
+            <h4 class="qtd-planos-qtd">{{ qtdPlanosAdquiridos }}</h4>
+        </div>
+    </div>
+
+</div>
+<form id="aquisicoes-lista" action="{% url 'efetivaCompraPlanos' %}" class="aquisicoes-lista" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for chave in carrinhoChaves %}
+
+    <div class="card">
+        <div class="card-body">
+            <!-- <input id="{{ chave.dataAquisicao }}" hidden> -->
+            <button type="button" class="btn-close position-sticky top-0 start-100" hx-delete="{% url 'deletaChaveCarrinho' chave.uuid %}" hx-target="#aquisicoes-container" aria-label="Close"></button>
+            <h5 class="card-title">{{ chave.planoId.titulo }}</h5>
+            <div class="vertical-spacer-p"></div>
+            <p class="card-text">Valor do plano: R$ {{ chave.planoId.valor }}</p>
+            <p class="card-text">Data validade: {{ chave.planoId.validade }}</p>
+
+            {% if listaAdvogados is not None %}
+
+            <select name="{{ chave.uuid }}" class="form-select" aria-label="Default select example">
+                <option value="" selected>Associar advogado</option>
+                {% for advogado in listaAdvogados %}
+                <option value="{{ advogado.advogadoId }}">{{ advogado.primeiroNome }} {{ advogado.sobrenome }}</option>
+                {% endfor %}
+            </select>
+            
+            {% endif %}
+        </div>
+    </div>
+
+    {% endfor %}
+    <button type="submit">Teste</button>
+</form>

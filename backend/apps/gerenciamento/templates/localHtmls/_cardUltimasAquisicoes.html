@@ -1,0 +1,38 @@
+<div class="lista-ultimas-aquisicoes">
+    {% for chave in chaves %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ chave.planoId.titulo }}</h5>
+
+            <!-- Nome do advogado associado a chave -->
+            {% if chave.advogadoId is not None %}
+                <h6 class="card-subtitle mb-2 text-muted">{{ chave.advogadoId.primeiroNome}} {{ chave.advogadoId.sobrenome }}</h6>
+            {% else %}
+            <form class="combo-associa-advogado" action="{% url 'efetivaAssociacao' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input name="chaveId" value="{{ chave.chaveId }}" hidden>
+                <select name="advogadoSelecionado" class="form-select" aria-label="Default select example">
+                    <option value="" selected>Associar advogado</option>
+                    {% for advogado in listaAdvogados %}
+                    <option value="{{ advogado.advogadoId }}">{{ advogado.primeiroNome }} {{ advogado.sobrenome }}</option>
+                    {% endfor %}
+                </select>
+                <button class="botao-associa-advogado" type="submit">Confirmar</button>
+            </form>
+            {% endif %}
+            
+            <div class="data-aquisicao">
+                <p class="card-text">Aquisição:</p>
+                <p class="card-text info"> {{ chave.dataAquisicao }}</p>
+            </div>
+
+            <!-- Link para editar cadastro do advogado -->
+            {% if chave.advogadoId is not None %}
+                <a href="{url 'atualizaCadastro' chave.advogadoId.advogadoId }" class="card-link">Editar Advogado</a>
+            {% else %}
+                <div></div>
+            {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+</div>

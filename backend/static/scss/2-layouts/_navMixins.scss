@@ -1,0 +1,37 @@
+@import '../1-base/colorSystem';
+
+@mixin logoHover {
+    transition: .05s;
+
+    &:hover {
+        color: whiteColor(300);
+        text-shadow: .1px 1px black;
+        
+        .fa-solid.fa-gavel {
+            color: whiteColor(300);
+        }
+    }    
+}
+
+@mixin logoHoverMenu {
+    transition: .05s;
+
+    &:hover {
+        color: primaryColor(100);
+        text-shadow: .1px 1px blackColor(600);
+        
+        .fa-solid.fa-gavel {
+            color: primaryColor(100);
+        }
+    }    
+}
+
+@mixin menuHover {
+    transition: .15s;
+
+    &:hover {
+        color: whiteColor(300);
+        // font-size: large;
+        font-weight: bold;
+    }    
+}

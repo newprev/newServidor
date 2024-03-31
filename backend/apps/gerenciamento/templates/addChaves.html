@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+    <section class="add-chaves-container">
+        
+        <!-- Título da página -->
+        <div class="add-chaves-titulo">
+            <h2>Aquisição de chaves</h2>
+            <h4>Adquira chaves para aumentar sua equipe de colaboradores</h4>
+        </div>
+
+        <div class="vertical-spacer-m"></div>
+
+        <!-- Switch mensal / anual -->
+        <div class="mensal-anual">
+            <h5>Mensal</h5>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+            </div>
+            <h5>Anual</h5>
+        </div>
+
+        <div class="vertical-spacer-m"></div>
+
+        <div hx-get="{% url 'buscaPlanos'%}" hx-trigger="load" hx-swap="innerHTML" class="cards-planos-container">
+            {% include 'localHtmls/_placeHolderBoot.html' %}
+        </div>
+
+        <!-- Informações aquisições -->
+        <div id="aquisicoes-container" class="aquisicoes-container" hx-get="{% url 'atualizaCarrinho' %}" hx-swap="innerHTML" hx-trigger="load">
+            <!-- conteúdo preenchido pela resposta do método atualizaCarrinho -->
+            {% include 'localHtmls/_placeHolderBoot.html' %}
+        </div>
+
+    </section>
+
+    {% endblock %}

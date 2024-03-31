@@ -1,0 +1,37 @@
+{% load static %}
+
+<header>
+    <div class="cabecalho">
+        {% if cadastro %}
+            <a id="cabecalho-logo" href="{% url 'home' %}">
+                <i class="fa-solid fa-gavel"></i>
+                <p id="titulo-new">NEW</p>
+                <p id="titulo-prev">PREV</p>
+            </a>
+        {% elif login %}
+            <div> </div>
+        {% endif %}
+
+        {% if user.is_authenticated and dashboard %}
+            <div id="cabecalho-nome">
+                <a id="cabecalho-nome-fantasia" href="{% url 'dashboard' %}">{{ user.nomeFantasia }}</a>
+            </div>
+        {% endif %}
+        <nav class="menu">
+            <ul class="menu-lista">
+
+                {% if user.is_authenticated %}
+                    <li class="menu-lista-item"><a class="menu-item-link" href="#">Home</a></li>
+                    <li class ="menu-lista-item"><a class ="menu-item-link ativo" href="escritorio={{user.nomeEscritorio}}">Seu Escritório</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link" href="#">Sobre nós</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link" href="{% url 'fazerLogout' %}">Logout</a></li>
+
+                {% else %}
+                    <li class="menu-lista-item"><a class="menu-item-link " href="#">Home</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link" href="">Sobre nós</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link ativo" href="#">Cadastre-se</a></li>
+                    <li class="menu-lista-item"><a class="menu-item-link" href="#">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+</header>

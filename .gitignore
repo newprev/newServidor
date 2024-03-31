@@ -3,10 +3,29 @@
 
 
 #Conexoes com o banco de dados
-datasource/hearthstone.json
-datasource/magic.json
-
+backend/datasource/hearthstone.json
+backend/datasource/magic.json
+backend/datasource/marioCart.json
 
 #Ambiente virtual
 prevServEnv/
 
+#Configurações de IDE
+.idea/
+backend/.idea/
+
+#Arquivos staticos/media
+backend/producao/static/*
+
+*.pyc
+
+logs/historicoLogs/*.txt
+
+.vscode/
+/media/foto/*
+
+
+
+backend/logs/historicoLogs/
+
+.gitignore.swp

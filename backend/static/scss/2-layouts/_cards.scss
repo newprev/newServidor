@@ -1,0 +1,31 @@
+@import '../1-base/colorSystem';
+
+@mixin card-info-padrao($colorFirula) {
+    $radius: 8px;
+
+    border-radius: $radius;
+    border: 1px solid blackColor(700);
+    display: flex;
+    justify-content: space-around;
+
+    .color-firula {
+        background-color: $colorFirula;
+        width: 3%;
+        height: auto;
+        border-top-left-radius: $radius;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: $radius;
+        border-bottom-right-radius: 0;
+    }
+
+    .conteudo {
+        width: 97%;
+        padding: 1.5rem;
+    }
+}
+
+.card-body {
+    .card-title {
+        font-weight: bold;
+    }
+}

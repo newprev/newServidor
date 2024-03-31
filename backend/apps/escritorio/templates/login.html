@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+
+    <section class="login-section">
+        <div class="form-container">
+            <div><a id="titulo-new">NEW</a><a id="titulo-prev">PREV</a></div>
+            <h2>LOGIN</h2>
+            <h3>Acesse a sua conta no NewPrev</h3>
+            <div class="vertical-spacer"></div>
+            <form action="{% url 'fazerLogin' %}" class="formulario" method="POST">
+                {% csrf_token %}
+                <input class="form-campo" name="email" placeholder="Entre com seu e-mail" value="{{ user.email }}" required>
+                <input class="form-campo" name="password" type="password" size="20" maxlength="20" value="{{ user.password }}" placeholder="Digite sua senha" required>
+            
+                <div class="esq-senha">
+                    <div>
+                        <a>Esqueceu a senha?</a>
+                        <a class="btn-esquce-senha" href="#">Clique aqui!</a><br>
+                    </div>
+                    <div>
+                        <input type="checkbox"><label> Manter-me conectado</label>
+                    </div>
+                </div>
+                <div class="vertical-spacer"></div>
+                    <input id="btn-principal-entrar" type="submit" value="Entrar">
+            </form>
+            <a class="criar-conta" href="{% url 'cadastro' %}">
+                <input class="btn-secundario-primAcesso" type="submit" value="Criar conta">
+            </a>
+        </div>
+    </section>
+
+    {% endblock %}

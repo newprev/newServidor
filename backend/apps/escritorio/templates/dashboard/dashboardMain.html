@@ -1,0 +1,19 @@
+{% extends '../base.html' %}
+{% load static %}
+
+    {% block content %}
+
+    <section class="container-principal">
+        <nav class="menu-lateral">
+            {% include 'dashboard/sidebar.html' %}
+        </nav>
+
+        <!-- lista Advogados -->
+        <div class="loading-dashboard" hx-get="{% url 'buscaAdvogados' %}" hx-trigger="load" hx-swap="outerHTML">
+            <!-- Lista carregada por meio do HTMX - Todo conteúdo da div abaixo será substituído pelo conteúdo em apps/advogado/templates/gridAdvogados.html -->
+            {% include 'dashboard/localHtmls/_placeHolderBoot.html' %}
+        </div>
+
+    </section>
+
+    {% endblock %}

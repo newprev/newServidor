@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <!-- HTMX  -->
+            <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+
+            <!-- CSS only -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+            <!-- Font awesome -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <!-- Google fonts (Bebas) -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+            <!-- Favicon -->
+            <link rel="icon" href="{% static 'images/favicon.png' %}">
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+            <!-- Meus arquivos estáticos -->
+            <link rel="stylesheet" href="{% static 'fonts/avenirFonts.css'%}">
+            <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+
+            <title>NewPrev</title>
+
+        </head>
+
+    <body>
+
+        {% include 'partials/nav.html' %}
+        
+        {% block content %} {% endblock %}
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-desc-container">
+                    <h3 class="footer-title">NewPrev</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis reprehenderit quos cum dicta? In velit illum tenetur dicta laborum necessitatibus voluptates ex rerum distinctio error, quo optio voluptatibus. Aspernatur, beatae?</p>
+                </div>
+                <div class="footer-links-container">
+                    <div class="footer-links-container-list">
+                        <p class="footer-title">Links</p>
+                        <ul>
+                            <li>
+                                <a href="#">Base de conhecimentos</a>
+                            </li>
+                            <li>
+                                <a href="#">Trabalhe conosco</a>
+                            </li>
+                            <li>
+                                <a href="#">Últimos projetos</a>
+                            </li>
+                            <li>
+                                <a href="#">Contato</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-copyright-container">
+                    <p>&copy; 2022 NewPrev</p>
+                    <p>A melhor opção de sistemas previdenciários</p>
+                </div>
+            </div>
+        </footer>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+        {% for m in messages %}
+                <script>
+                    Swal.fire({
+                        "title": "{{ m }}",
+                        "icon": "{{ m.tags }}"
+                    })
+                </script>
+
+        {% endfor %}
+    {% endif %}
+
+    {% block js %}
+    {% endblock %}
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-success" class="toast bg-success bg-gradient" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+            <!-- <img src="..." class="rounded me-2" alt="..."> -->
+            <strong class="me-auto">Atenção!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="toast-message-success" class="toast-body text-bg-primary"></div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-warning" class="toast bg-warning bg-gradient" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+            <!-- <img src="..." class="rounded me-2" alt="..."> -->
+            <strong class="me-auto">Atenção!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div id="toast-message-warning" class="toast-body"></div>
+        </div>
+    </div>
+
+    </body>
+    <script type="text/javascript" src={% static "js/dashboardEvents.js" %}></script>
+    </html>

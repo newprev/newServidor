@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "backend/api new prev"
+version = "0.1.0"
+description = "Backend e API servidor do New Prev"
+authors = ["Israel Alves <israel.usp@gmail.com>"]
+readme = "README.md"
+packages = [{include = "backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+APScheduler = "3.9.1"
+colorama = "0.4.5"
+djangorestframework = "^3.15.1"
+drf-yasg = "^1.21.7"
+Faker = "^24.4.0"
+pandas = "^2.2.1"
+pymysql = "^1.1.0"
+python-dateutil = "^2.9.0.post0"
+python-dotenv = "^1.0.1"
+requests = "^2.31.0"
+sentry-sdk = "^1.44.0"
+unicode = "^2.9"
+uuid = "^1.30"
+validate-docbr = "^1.10.0"
+django = "^5.0.3"
+django-cors-headers = "^4.3.1"
+django-filter = "^24.2"
+mysql-connector-python = "^8.3.0"
+mysqlclient = "^2.2.4"
+pillow = "^10.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,114 @@
+@import '../1-base/btnDesign';
+@import '../1-base/colorSystem';
+@import '../1-base/labelDesign';
+@import '../2-layouts/menuLateral';
+@import '../3-modules/cardAdvogado';
+
+
+// Container principal dashboard
+.container-principal {
+    display: flex;
+    height: 90vh;
+    background-color: whiteColor(300);
+
+    .loading-dashboard {
+        width: 65%;
+        height: 100%;
+        display: flex;
+        padding: 2rem;
+        flex-direction: column;
+        align-self: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    #barra-lateral {
+        box-shadow: 4px 2px 2px rgba($color: blackColor(600), $alpha: 0.3);
+    }
+}
+
+.grid-advogados-container{
+    padding: 1rem 2rem;
+    width: 100%;
+    overflow-y: auto;
+    
+    // Saudação inicial dashboard
+    .texto-saudacao {
+        width: 50%;
+        padding: 1rem;
+
+        h3 {
+            @extend %saudacoes-padrao;
+        }
+    }
+
+    .grid-advogados-cadastrados {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding-right: 1rem;
+
+        .card-padrao-advogado {
+            @extend %card-padrao-advogado;
+            margin-bottom: 1rem;
+        }
+
+        .card-a-cadastrar {
+            @extend %card-a-cadastrar;
+        }
+    }
+}
+
+// Conteúdo central sem advogados cadastrados
+.sem-cadastro-section {
+    padding: 2rem;
+    width: 100%;
+
+    .container-conteudo {
+        display: flex;
+        justify-content: space-around;
+
+        .container-central {
+            width: 40%;
+            height: 70vh;
+            display: flex;
+            padding-top: 10rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .fa-solid.fa-address-card {
+                font-size: 5rem;
+                color: rgba($color: primaryColor(200), $alpha: 0.3);
+            }
+
+            .btn.cadastra-advogado {
+                box-shadow: 2px 2px 3px blackColor(800);
+                @extend %btn-secondary-invertido-G;
+
+                &:hover {
+                    transition: .2s;
+                    box-shadow: 2px 2px 3px blackColor(600);
+                }
+            }
+
+            #texto-central-maior {
+                color: blackColor(600);
+                font-size: 1.5rem;
+                font-weight: bold;
+                white-space: nowrap;
+            }
+
+            #texto-central-menor {
+                color: blackColor(600);
+                font-size: 1.5rem;
+            }
+        }
+
+        .horizontal-spacer.m {
+            width: 20%;
+        }
+    }
+}

@@ -1,0 +1,66 @@
+@import '../1-base/colorSystem';
+@import '../2-layouts/navMixins';
+
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    height: 5rem;
+    background-color: primaryColor();
+    z-index: 1;
+    position: relative;
+    box-shadow: 4px 2px 2px rgba($color: blackColor(600), $alpha: 0.3);
+
+    #cabecalho-logo {
+        display: flex;
+        justify-content: space-between;
+        color: blackColor(800);
+        font-size: 3rem;
+        align-items: center;
+        @include logoHover();
+        cursor: pointer;
+    }
+
+    #titulo-new {
+        font-size: 1.5rem;
+        color: blackColor(800);
+        margin-left: 0.5rem;
+    }
+
+    #titulo-prev {
+        font-size: 1.5rem;
+        color: blackColor(800);
+        font-weight: bold;
+    }
+
+    #cabecalho-nome-fantasia {
+        font-family: "Bebas Neue";
+        font-size: 3rem;
+        color: whiteColor();
+        font-weight: 350;
+    }
+
+    .fa-solid.fa-gavel {
+        color: blackColor(800);
+        font-size: 2rem;
+    }
+
+    .menu-lista {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        &-item{
+            margin: 0 1rem;
+        }
+
+        a {
+            color: blackColor(800);
+            @include menuHover();
+        }
+
+    }
+}

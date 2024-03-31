@@ -1,0 +1,100 @@
+@import 'colorSystem';
+
+html {
+    font-size: 14px;
+    background-color: whiteColor(300);
+}
+
+header {
+    position: relative;
+    z-index: 1;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Avenir';
+    font-weight: 250;
+    font-size: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+i {
+    color: blackColor(100);
+}
+
+a {
+    text-decoration: none;
+    transition: .4s;
+
+    &hover { 
+        color: primaryColor(-100);
+    }
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+select {
+  background-color: whiteColor(100);
+  border: 1px solid blackColor(800);
+  border-radius: 4px;
+  padding: 0px 5px;
+  margin: 0.45rem 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+//   line-height: inherit;
+  outline: none;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:hover {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+
+    &:focus {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+}
+
+table td, table td * {
+    vertical-align: top;
+}
+
+.form-campo {
+    background-color: whiteColor(100);
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    justify-content: center;
+    border: 1px solid blackColor(800);
+
+    &:hover {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+
+    &:focus {
+        transition: .2s;
+        box-shadow: 2px 2px 1px blackColor(800);
+    }
+}
