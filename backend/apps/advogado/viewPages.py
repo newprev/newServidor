@@ -130,7 +130,7 @@ def avaliaCadastroAdvogado(request):
                 sobrenome=sobrenome,
                 senha=senha,
                 cpf=cpf,
-                oab=oab,
+                numeroOAB=oab,
                 email=email,
             )
             # advogado.save()
