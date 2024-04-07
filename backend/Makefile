@@ -91,7 +91,7 @@ instala-mysql: ## Instala mysql e dependências
 libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 	@echo "Liberando porta do mysql para acesso externo"
 	@sudo -S chmod ug+rw /etc/mysql/mysql.conf.d/mysqld.cnf
-	@python instalacao/liberaBancoMysql.py
+	@python3 instalacao/liberaBancoMysql.py
 	@sudo -S ufw allow 3306
 	@sudo systemctl restart mysql
 	@sudo -S mysql_secure_installation
