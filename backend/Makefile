@@ -21,7 +21,7 @@ clearAllMigrations: ## Exclui todos os arquivos de migração gerados pelo siste
 
 
 recriaAllMigrations: clearAllMigrations makeAllMigrations ## Exclui todos os arquivos de migração, recria todos e completa todas as migrações
-deletaRecriaAtualiza: recriaBanco clearAllMigrations makeAllMigrations updateDB-Backup run-dev ## Deleta banco de dados, recria, deleta todos os arquivos de migração, recria, completa a migração,  popula o banco com o último backup feito e reinicia o servidor.
+recriaAtualiza: recriaAllMigrations updateDB-Backup ## Deleta banco de dados, recria, deleta todos os arquivos de migração, recria, completa a migração e popula o banco com o último backup feito.
 
 
 ## @ Migracoes
@@ -62,13 +62,10 @@ updateDB-Backup: ## Atualiza o banco baseado nos arquivos de backup criados
 updateDB-Tabela: ## Atualiza apenas uma tabela baseado no arquivo de backup criado
 	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/indicesAtuMonetaria.sql
 
-recriaBanco: ## Deleta o banco GIDEON, recria o banco e apresenta os bancos criados nessa base
-	@mysql -h localhost -u NEWPREV -p -e "DROP DATABASE GIDEON; CREATE DATABASE GIDEON; SHOW DATABASES;"
-
 
 # -----------------------------------
 
-# @ Instalação do pip
+# @ Instalação do pip e poetry
 install-pip: ## Instala gerenciador de dependências do Python
 	@sudo apt install python3-pip -y
 
@@ -78,6 +75,7 @@ install-poetry: ## Instalação do gerenciador de ambiente
 	@sudo -S apt install pipx -y
 	@sudo pipx ensurepath
 	@sudo pipx install poetry
+	@poetry install
 
 
 # -----------------------------------
@@ -99,3 +97,4 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 
 
 install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
+makeEverything: install recriaAtualiza ## Instala tudo necessário para iniciar o sistema
