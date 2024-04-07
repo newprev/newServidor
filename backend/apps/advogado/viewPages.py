@@ -130,7 +130,7 @@ def avaliaCadastroAdvogado(request):
                 sobrenome=sobrenome,
                 senha=senha,
                 cpf=cpf,
-                oab=oab,
+                numeroOAB=oab,
                 email=email,
             )
             # advogado.save()
@@ -374,7 +374,7 @@ def efetivaAtualizaCadastro(request):
 
         if campoAlterado(advogado.oab, oab):
             alterouDadoPessoal = True
-            advogado.oab = oab
+            advogado.numeroOAB = oab
 
         if campoAlterado(advogado.email, email):
             alterouDadoPessoal = True
