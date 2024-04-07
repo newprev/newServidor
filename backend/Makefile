@@ -95,7 +95,7 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 	@sudo -S ufw allow 3306
 	@sudo systemctl restart mysql
 	@sudo -S mysql_secure_installation
-	@sudo -S mysql -h 'localhost' < usuarioSQL.sql
+	@sudo -S mysql -h 'localhost' < instalacao/usuarioSQL.sql
 
 
 install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
