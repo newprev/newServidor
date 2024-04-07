@@ -1,10 +1,12 @@
-##Iniciar o servidor (fora do ambiente virtual)
-run-dev:
-	@python3.8 manage.py runserver
-run-aws:
-	@python3.8 manage.py runserver 0:8080
-access-aws:
-	@cd ../Documentos && ssh -i "NewPrevDev.pem" ubuntu@ec2-3-139-65-128.us-east-2.compute.amazonaws.com
+## @ Ambiente do Linux
+atualiza-apt: ## Atualizando repositórios apt
+	@echo "Atualizando repositorios apt"
+	@sudo apt-get upgrade -y
+	@sudo apt-get update -y
+	@sudo apt upgrade -y
+	@sudo apt update -y
+
+# -----------------------------------
 
 
 ## @ Limpeza de migrações
@@ -65,6 +67,8 @@ recriaBanco: ## Deleta o banco GIDEON, recria o banco e apresenta os bancos cria
 
 
 # -----------------------------------
+
+# @ Instalação de ferramentas
 install-poetry: ## Instalação do gerenciador de ambiente
 	@sudo -S apt install pipx -y
 	@sudo pipx ensurepath
@@ -72,19 +76,22 @@ install-poetry: ## Instalação do gerenciador de ambiente
 
 
 # -----------------------------------
+
+## @ Instalação do sistema
 instala-mysql: ## Instala mysql e dependências
 	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential -y
 	@pip install --upgrade pip
 
 	@sudo -S apt-get install mysql-server -y
-	@sudo -S mysql_secure_installation
-	@sudo -S mysql -h 'localhost' < usuarioSQL.sql
 
-## @ Instalação do sistema
 libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 	@echo "Liberando porta do mysql para acesso externo"
 	@sudo -S chmod ug+rw /etc/mysql/mysql.conf.d/mysqld.cnf
 	@python instalacao/liberaBancoMysql.py
 	@sudo -S ufw allow 3306
 	@sudo systemctl restart mysql
+	@sudo -S mysql_secure_installation
+	@sudo -S mysql -h 'localhost' < usuarioSQL.sql
 
+
+install: atualiza-apt install-poetry instala-mysql libera-porta-mysql ## Instala tudo
