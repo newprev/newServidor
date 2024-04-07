@@ -73,17 +73,19 @@ install-pip: ## Instala gerenciador de dependências do Python
 install-poetry: ## Instalação do gerenciador de ambiente
 	@pip install --upgrade pip
 	@sudo -S apt install pipx -y
-	@sudo pipx ensurepath
 	@sudo pipx install poetry
-	@poetry install
+	@sudo pipx ensurepath
 
+# @ Instala bibliotecas necessarias do projeto
+install-libs: ## Instala libs do Python com Poetry
+	@exec bash
+	@poetry install
 
 # -----------------------------------
 
 ## @ Instalação do sistema
 instala-mysql: ## Instala mysql e dependências
 	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential -y
-
 	@sudo -S apt-get install mysql-server -y
 
 libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
@@ -97,4 +99,4 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 
 
 install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
-makeEverything: install recriaAtualiza ## Instala tudo necessário para iniciar o sistema
+makeEverything: install install-libs recriaAtualiza ## Instala tudo necessário para iniciar o sistema
