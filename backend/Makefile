@@ -68,8 +68,13 @@ recriaBanco: ## Deleta o banco GIDEON, recria o banco e apresenta os bancos cria
 
 # -----------------------------------
 
+# @ Instalação do pip
+install-pip: ## Instala gerenciador de dependências do Python
+	@sudo apt install python3-pip -y
+
 # @ Instalação de ferramentas
 install-poetry: ## Instalação do gerenciador de ambiente
+	@pip install --upgrade pip
 	@sudo -S apt install pipx -y
 	@sudo pipx ensurepath
 	@sudo pipx install poetry
@@ -80,7 +85,6 @@ install-poetry: ## Instalação do gerenciador de ambiente
 ## @ Instalação do sistema
 instala-mysql: ## Instala mysql e dependências
 	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential -y
-	@pip install --upgrade pip
 
 	@sudo -S apt-get install mysql-server -y
 
@@ -94,4 +98,4 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 	@sudo -S mysql -h 'localhost' < usuarioSQL.sql
 
 
-install: atualiza-apt install-poetry instala-mysql libera-porta-mysql ## Instala tudo
+install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
