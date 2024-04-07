@@ -63,8 +63,15 @@ updateDB-Tabela: ## Atualiza apenas uma tabela baseado no arquivo de backup cria
 recriaBanco: ## Deleta o banco GIDEON, recria o banco e apresenta os bancos criados nessa base
 	@mysql -h localhost -u NEWPREV -p -e "DROP DATABASE GIDEON; CREATE DATABASE GIDEON; SHOW DATABASES;"
 
-# -----------------------------------
 
+# -----------------------------------
+install-poetry: ## Instalação do gerenciador de ambiente
+	@sudo -S apt install pipx -y
+	@sudo pipx ensurepath
+	@sudo pipx install poetry
+
+
+# -----------------------------------
 instala-mysql: ## Instala mysql e dependências
 	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential -y
 	@pip install --upgrade pip
