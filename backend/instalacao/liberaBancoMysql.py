@@ -12,10 +12,6 @@ def main():
         arquivoTotal: str = ''
 
         if pathMysql.exists():
-            # print(f"{stat.S_IRUSR=}")
-            # print(f"{stat.S_IRGRP=}")
-            # print(f"{stat.S_IROTH=}")
-            # chmod(pathMysql, stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
 
             with pathMysql.open(mode='r', encoding='utf-8') as f:
                 conteudoArquivo = f.read()
@@ -31,12 +27,13 @@ def main():
                     f.flush()
 
             print(f"Arquivo {pathMysql} alterado com sucesso!")
-            exit(1)
+            exit(0)
 
         else:
             print("Não funfou...")
-            exit(0)
+            exit(1)
     except Exception as err:
         print(err)
+        exit(1)
 
 main()
