@@ -1,7 +1,4 @@
-##Parâmetros importantes
-PASSWORD=senha
-
-##Iniciar o servidor
+##Iniciar o servidor (fora do ambiente virtual)
 run-dev:
 	@python3.8 manage.py runserver
 run-aws:
@@ -19,7 +16,6 @@ clearAllMigrations: ## Exclui todos os arquivos de migração gerados pelo siste
 	@rm -f apps/informacoes/migrations/*.py && echo "---> apps/informacoes/migrations"
 	@rm -f apps/sincron/migrations/*.py && echo "---> apps/sincron/migrations"
 	@rm -f apps/sincron/migrations/*.py && echo "---> apps/newMails/migrations"
-
 
 
 recriaAllMigrations: clearAllMigrations makeAllMigrations ## Exclui todos os arquivos de migração, recria todos e completa todas as migrações
@@ -42,27 +38,46 @@ makeAllMigrations: ## Cria todos os arquivos de migração e completa a migraç�
 ## @ Banco de dados
 updateDB-Backup: ## Atualiza o banco baseado nos arquivos de backup criados 
 	@echo 'Atualizando todas as tabelas'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/carenciasLei91.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/carenciasLei91.sql
 	@echo '--> Carências da Lei de 91 está atualizado'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/convMon.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/convMon.sql
 	@echo '--> Conversões Monetárias está atualizada'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/expectativaSobrevida.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/expectativaSobrevida.sql
 	@echo '--> Expectativas de sobrevida estão atualizadas'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/indicadores.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/indicadores.sql
 	@echo '--> Indicadores do CNIS estão atualizados'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/salarioMinimo.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/salarioMinimo.sql
 	@echo '--> Salários Minimos estão atualizados'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/tetosPrev.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/tetosPrev.sql
 	@echo '--> Tetos previdenciarios estão atualizados'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/indicesAtuMonetaria.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/indicesAtuMonetaria.sql
 	@echo '--> Índices de atualização monetária estão atualizados'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/TipoBeneficio.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/TipoBeneficio.sql
 	@echo '--> Tipo de benefícios estão atualizados'
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/especieTipo.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/especieTipo.sql
 	@echo '--> Tipos de espécies de benefícios estão atualizados'
 
 updateDB-Tabela: ## Atualiza apenas uma tabela baseado no arquivo de backup criado
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" GIDEON < ../backup/indicesAtuMonetaria.sql
+	@mysql -h localhost -u NEWPREV -p GIDEON < ../backup/indicesAtuMonetaria.sql
 
 recriaBanco: ## Deleta o banco GIDEON, recria o banco e apresenta os bancos criados nessa base
-	@mysql -h localhost -u NEWPREV -p"${PASSWORD}" -e "DROP DATABASE GIDEON; CREATE DATABASE GIDEON; SHOW DATABASES;"
+	@mysql -h localhost -u NEWPREV -p -e "DROP DATABASE GIDEON; CREATE DATABASE GIDEON; SHOW DATABASES;"
+
+# -----------------------------------
+
+instala-mysql: ## Instala mysql e dependências
+	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential -y
+	@pip install --upgrade pip
+
+	@sudo -S apt-get install mysql-server -y
+	@sudo -S mysql_secure_installation
+	@sudo -S mysql -h 'localhost' < usuarioSQL.sql
+
+## @ Instalação do sistema
+libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
+	@echo "Liberando porta do mysql para acesso externo"
+	@sudo -S chmod ug+rw /etc/mysql/mysql.conf.d/mysqld.cnf
+	@python instalacao/liberaBancoMysql.py
+	@sudo -S ufw allow 3306
+	@sudo systemctl restart mysql
+

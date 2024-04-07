@@ -52,7 +52,7 @@ case $FIRST_PARAM in
 		sudo -S apt-get remove mysql-common -y
 		sudo -S apt-get remove phpmyadmin -y
 		sudo -S apt autoremove
-
+		
 		sudo -S apt-get install mysql-server -y
 	;;
 
@@ -73,7 +73,6 @@ case $FIRST_PARAM in
 
 		sudo -S apt-get install mysql-server -y
 		sudo -S mysql_secure_installation
-
 		sudo -S mysql -h 'localhost' < usuarioSQL.sql
 	;;
 
@@ -86,7 +85,7 @@ case $FIRST_PARAM in
 		sudo -S rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
 		sudo apt autoremove -y
 		sudo apt autoclean -y
-
+		
 		sudo apt-get update -y
 		sudo apt-get install -f
 		sudo apt-get install mysql-server-8.0 -y

@@ -26,7 +26,7 @@ class Advogado(models.Model):
         db_table = "Advogados"
 
     def __str__(self):
-        return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.oab}"
+        return f"id: {self.advogadoId}, nome: {self.primeiroNome}, email: {self.email}, OAB: {self.numeroOAB}"
 
     def toDict(self, enviaEscritorio: bool = True):
         return {

@@ -29,3 +29,5 @@ logs/historicoLogs/*.txt
 backend/logs/historicoLogs/
 
 .gitignore.swp
+
+*.swp
