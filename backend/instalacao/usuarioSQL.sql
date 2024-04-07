@@ -1,6 +1,4 @@
 /*Script criado por Israel Alves Lucena Gomes em 30/04/2023*/
-
-DELIMITER //
 DROP DATABASE IF EXISTS GIDEONS;
 
 CREATE DATABASE GIDEONS;
@@ -9,6 +7,7 @@ USE GIDEON;
 
 DROP PROCEDURE IF EXISTS concedePermissoes;
 
+DELIMITER //
 CREATE PROCEDURE concedePermissoes ()
 	
 	BEGIN
@@ -36,9 +35,8 @@ CREATE PROCEDURE concedePermissoes ()
 		/* Reiniciando */
 		FLUSH PRIVILEGES;
 		
-END;
-
-CALL concedePermissoes();
-	
+END//
 
 DELIMITER ;
+
+CALL concedePermissoes();
