@@ -90,15 +90,14 @@ install-poetry: ## Instalação do gerenciador de ambiente
 
 # @ Instala bibliotecas necessarias do projeto
 install-libs: ## Instala libs do Python com Poetry
-	@exec bash -l
 	@poetry install
 
 # -----------------------------------
 
 ## @ Instalação do sistema
 instala-mysql: ## Instala mysql e dependências
-	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential libssl-dev -y
-	@sudo -S apt install python3-dev default-libmysqlclient-dev build-essential libssl-dev -y
+	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config -y
+	@sudo -S apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config -y
 	@sudo -S apt-get install mysql-server -y
 
 libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
