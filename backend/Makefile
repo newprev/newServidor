@@ -111,4 +111,4 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 
 
 install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
-makeEverything: configuraAmbiente install install-libs recriaAtualiza ## Instala tudo necessário para iniciar o sistema
+makeEverything: configuraAmbiente install recriaAtualiza ## Instala tudo necessário para iniciar o sistema
