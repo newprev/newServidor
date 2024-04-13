@@ -6,6 +6,18 @@ atualiza-apt: ## Atualizando repositórios apt
 	@sudo apt upgrade -y
 	@sudo apt update -y
 
+install-softwares: ## Instala programas importantes para o projeto no Linux
+	@echo "Instala programas importantes para o projeto no Linux"
+	@sudo apt install unzip -y
+
+
+copiaDezipa: ## Copia e unzipa os arquivos nos diretórios corretos
+	@mkdir ~/backup
+	@unzip ~/backup.zip -d ~/newServidor/backup
+	@unzip ~/datasource.zip -d ~/newServidor/backend/datasource
+
+configuraAmbiente: atualiza-apt install-softwares copiaDezipa ## Resolve tudo que precisamos do ambiente Linux
+
 # -----------------------------------
 
 
@@ -100,4 +112,4 @@ libera-porta-mysql: ## Libera porta do banco ded dados para acesso externo
 
 
 install: atualiza-apt install-pip install-poetry instala-mysql libera-porta-mysql ## Instala tudo
-makeEverything: install install-libs recriaAtualiza ## Instala tudo necessário para iniciar o sistema
+makeEverything: configuraAmbiente install install-libs recriaAtualiza ## Instala tudo necessário para iniciar o sistema
