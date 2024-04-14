@@ -25,7 +25,7 @@ def emailBoasVindas(escritorio: Escritorio) -> True:
 def primeiroAcessoAdvogado(advogado: Advogado, primAcessoModel: TrocaSenha) -> True:
     try:
         send_mail(
-            f'Seja bem vindo(a), {advogado.nomeAdvogado}',
+            f'Seja bem vindo(a), {advogado.primeiroNome}',
             f'Olá!\nÉ um prazer ter você conosco. Abaixo estão alguns dos seus dados. Pedimos que confirme-os e, se tudo estiver correto, insira o código de acesso e defina a sua senha.\n\nCódigo de acesso: {primAcessoModel.codAcesso}',
             'thomas.anderson@newprev.dev.br',
             [advogado.email],
@@ -43,7 +43,7 @@ def trocouSenhaAdvogado(advogado: Advogado, primAcessoModel: TrocaSenha) -> True
     try:
         send_mail(
             f'Troca de senha',
-            f'Olá, {advogado.nomeAdvogado}! \n\nPara trocar sua senha, use o código gerado abaixo. Caso não tenha sido você que pediu para trocar a senha, entre em contato com a equipe de suporte o mais rápido possível.\n\nCódigo de acesso: {primAcessoModel.codAcesso}',
+            f'Olá, {advogado.primeiroNome}! \n\nPara trocar sua senha, use o código gerado abaixo. Caso não tenha sido você que pediu para trocar a senha, entre em contato com a equipe de suporte o mais rápido possível.\n\nCódigo de acesso: {primAcessoModel.codAcesso}',
             'thomas.anderson@newprev.dev.br',
             [advogado.email],
             fail_silently=False
