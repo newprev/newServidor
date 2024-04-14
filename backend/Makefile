@@ -9,7 +9,7 @@ atualiza-apt: ## Atualizando repositórios apt
 install-softwares: ## Instala programas importantes para o projeto no Linux
 	@echo "Instala programas importantes para o projeto no Linux"
 	@sudo apt install unzip -y
-
+	@sudo apt install nginx -y
 
 copiaDezipa: ## Copia e unzipa os arquivos nos diretórios corretos
 	@mkdir ~/backup
